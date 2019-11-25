@@ -1,4 +1,4 @@
 /resource/**
 /ignore/**
 *.code-workplace
-Poof-O-Floof/src/main/resources/application.properties
+/Poof-O-Floof/src/main/resources/application.properties
