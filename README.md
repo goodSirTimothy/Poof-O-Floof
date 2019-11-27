@@ -9,10 +9,10 @@
 * First-Stage goals (by 2019-11-30):
   * Get the user ip and geolocation from a third-party API
    * Hao: I think we should use (latitude, longitude) because:
-    ** It is pure geo-location data, independant of the arbitration of USPS/gerrymandering
-    ** It is the same amount of work compared with using zip code/city state
-    ** If user ip is outsite of US, we don't need to handle those exceptions. Just make the search radius larger and larger.
-    ** If we also record the coordinates of the animal/photo location, we can serve cached photo urls from our database by doing simple triangulation (instead of dragging extra Java libraries to parse the zip code. This is an extended goal of course.)
+    * It is pure geo-location data, independant of the arbitration of USPS/gerrymandering
+    * It is the same amount of work compared with using zip code/city state
+    * If user ip is outsite of US, we don't need to handle those exceptions. Just make the search radius larger and larger.
+    * If we also record the coordinates of the animal/photo location, we can serve cached photo urls from our database by doing simple triangulation (instead of dragging extra Java libraries to parse the zip code. This is an extended goal of course.)
   * Fetch the JSON from petfinder
    * Hao: the API token expires every 3600 seconds. We need some logic to automatically renew it. Say by recording the timestamp of last renewal and check it periodically and/or upon serving new photos to users. 
   * Parse JSON into photo POJOs and store them in the DB
