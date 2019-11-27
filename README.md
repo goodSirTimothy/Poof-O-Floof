@@ -8,7 +8,7 @@
 * Welcome Gabby on board!
 * Current responsibilities of the project: Gabby and Hao on the client-side/Angular. Boris and Tim on the backend.
 * First-Stage goals (by 2019-11-30):
-  * Get the user ip and geolocation from a third-party API
+  * Get the user ip, and then translate into geolocation from a third-party API
     * Hao: I think we should use (latitude, longitude) because:
       1. It is pure geo-location data, independant of the arbitration of USPS/gerrymandering
       2. It is the same amount of work compared with using zip code/city state
