@@ -60,3 +60,4 @@ The back-end server of the application will record the preferences of any user, 
 ## Application Features - Evil Side
 * When a user wants to remove/release an animal in the favorite list, the user has to drag the animal thumbnail into a meat mincer.
 * After an animal is minced, the user will be awarded with a sausage badge.
+  
