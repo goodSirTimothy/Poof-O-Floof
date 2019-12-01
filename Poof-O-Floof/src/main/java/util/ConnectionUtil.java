@@ -28,6 +28,7 @@ public class ConnectionUtil {
 			logger.debug(URL);
 			logger.debug(USERNAME);
 			logger.debug(PASSWORD);
+			logger.debug(DriverManager.getConnection(URL, USERNAME, PASSWORD));
 			return DriverManager.getConnection(URL, USERNAME, PASSWORD);
 		} catch (SQLException e) {
 			Exceptions.logSQLException(e);
