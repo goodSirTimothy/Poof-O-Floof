@@ -1,4 +1,3 @@
-
 # Poof-O-Floof
 ## 2019/11/25 Agreed on the following directions:
 1. Use Java to fetch ip-geolocation data and petfinder.com
