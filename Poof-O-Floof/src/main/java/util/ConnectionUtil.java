@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 public class ConnectionUtil {
 	// Fail Fast
 	private static Logger logger = LogManager.getLogger(ConnectionUtil.class);
-	private static Properties props = getJdbcProperties();
+	private static Properties props = getProperties();
 
 	// Magic Strings
 	private static final String URL = props.getProperty("jdbc.url");
@@ -38,7 +38,7 @@ public class ConnectionUtil {
 
 	// All this method does is retrieve our particular properties needed to connect
 	// to DB
-	private static Properties getJdbcProperties() {
+	private static Properties getProperties() {
 		try {
 			Properties props = new Properties();
 

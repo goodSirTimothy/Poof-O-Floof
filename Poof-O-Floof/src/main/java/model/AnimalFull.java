@@ -10,9 +10,9 @@ public class AnimalFull {
 	private String colorPrimary;
 	private String colorSecondary;
 	private String colorTertiary;
-	private String age;			// why did you do varchar Hao?
+	private int age;
 	private String gender;
-	private String size;		// why did you do varchar Hao?
+	private double size;
 	private String coat;
 	private String status;
 	private String url;
@@ -22,9 +22,9 @@ public class AnimalFull {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AnimalFull(int animalId, String animalType, String species, String breedPrimary, String breedSecondary,
-			String breedMixed, String colorPrimary, String colorSecondary, String colorTertiary, String age,
-			String gender, String size, String coat, String status, String url) {
+	public AnimalFull(int animalId, String animalType, String species, String breedPrimary, String breedSecondary,=
+			String breedMixed, String colorPrimary, String colorSecondary, String colorTertiary, int age, String gender,
+			double size, String coat, String status, String url) {=
 		super();
 		this.animalId = animalId;
 		this.animalType = animalType;
@@ -115,11 +115,11 @@ public class AnimalFull {
 		this.colorTertiary = colorTertiary;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 
@@ -131,11 +131,11 @@ public class AnimalFull {
 		this.gender = gender;
 	}
 
-	public String getSize() {
+	public double getSize() {
 		return size;
 	}
 
-	public void setSize(String size) {
+	public void setSize(double size) {
 		this.size = size;
 	}
 
@@ -167,7 +167,7 @@ public class AnimalFull {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((age == null) ? 0 : age.hashCode());
+		result = prime * result + age;
 		result = prime * result + animalId;
 		result = prime * result + ((animalType == null) ? 0 : animalType.hashCode());
 		result = prime * result + ((breedMixed == null) ? 0 : breedMixed.hashCode());
@@ -178,7 +178,9 @@ public class AnimalFull {
 		result = prime * result + ((colorSecondary == null) ? 0 : colorSecondary.hashCode());
 		result = prime * result + ((colorTertiary == null) ? 0 : colorTertiary.hashCode());
 		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + ((size == null) ? 0 : size.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(size);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((species == null) ? 0 : species.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((url == null) ? 0 : url.hashCode());
@@ -194,10 +196,7 @@ public class AnimalFull {
 		if (getClass() != obj.getClass())
 			return false;
 		AnimalFull other = (AnimalFull) obj;
-		if (age == null) {
-			if (other.age != null)
-				return false;
-		} else if (!age.equals(other.age))
+		if (age != other.age)
 			return false;
 		if (animalId != other.animalId)
 			return false;
@@ -246,10 +245,7 @@ public class AnimalFull {
 				return false;
 		} else if (!gender.equals(other.gender))
 			return false;
-		if (size == null) {
-			if (other.size != null)
-				return false;
-		} else if (!size.equals(other.size))
+		if (Double.doubleToLongBits(size) != Double.doubleToLongBits(other.size))
 			return false;
 		if (species == null) {
 			if (other.species != null)
@@ -271,11 +267,10 @@ public class AnimalFull {
 
 	@Override
 	public String toString() {
-		return "Animal [animalId=" + animalId + ", animalType=" + animalType + ", species=" + species
+		return "AnimalFull [animalId=" + animalId + ", animalType=" + animalType + ", species=" + species
 				+ ", breedPrimary=" + breedPrimary + ", breedSecondary=" + breedSecondary + ", breedMixed=" + breedMixed
 				+ ", colorPrimary=" + colorPrimary + ", colorSecondary=" + colorSecondary + ", colorTertiary="
 				+ colorTertiary + ", age=" + age + ", gender=" + gender + ", size=" + size + ", coat=" + coat
 				+ ", status=" + status + ", url=" + url + "]";
 	}
-	
 }
