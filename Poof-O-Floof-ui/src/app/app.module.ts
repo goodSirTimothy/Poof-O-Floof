@@ -1,17 +1,24 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-// import { NgxGalleryModule } from 'ngx-gallery';
+import { HttpClientModule } from '@angular/common/http';
+import { MainPhotoComponent } from './main-photo/main-photo.component';
+
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    // NgxGalleryModule,
-    BrowserModule
+    HttpClientModule,
+    BrowserModule,
+    RouterModule.forRoot([
+      { path: '', component: MainPhotoComponent },
+    ])
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    MainPhotoComponent
+  ],
+  bootstrap: [AppComponent],
+  providers: []
 })
 export class AppModule { }
