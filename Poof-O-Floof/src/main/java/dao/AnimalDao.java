@@ -21,7 +21,7 @@ public interface AnimalDao {
 	 * @param userId = the user that wanted to save 
 	 * @return
 	 */
-	boolean saveFavoritePicture(String animalId, int userId);
+	boolean saveFavoritePicture(int animalId, int userId);
 
 	/************************************************
 	 * 					Update Logic				*
