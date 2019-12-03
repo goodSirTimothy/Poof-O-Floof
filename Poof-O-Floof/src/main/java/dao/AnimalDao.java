@@ -15,6 +15,9 @@ public interface AnimalDao {
 	 */
 	boolean saveFullAnimal(AnimalFull animalFull);
 	
+	//implementing this first
+	boolean saveBasicAnimal(AnimalBasic animalBasic);
+	
 	/**
 	 * save the information of a favorite picture
 	 * @param animalId = the animalID (with this, when can query the DB and retrieve all information
@@ -27,6 +30,8 @@ public interface AnimalDao {
 	 * 					Update Logic				*
 	 ***********************************************/
 	boolean updateDailyLikes(AnimalBasic animalBasic);
+	
+	//maybe have a function to reset daily likes
 	
 	boolean updateTotalLikes(AnimalBasic animalBasic);
 

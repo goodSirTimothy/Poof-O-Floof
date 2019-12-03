@@ -4,11 +4,12 @@ public class AnimalBasic {
 	private int animalId;
 	private String animalType;
 	private String species;
+  
 	private int age;
 	private String gender;
 	private double size;
 	private String url;
-	
+
 	public AnimalBasic() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -141,7 +142,4 @@ public class AnimalBasic {
 		return "AnimalBasic [animalId=" + animalId + ", animalType=" + animalType + ", species=" + species + ", age="
 				+ age + ", gender=" + gender + ", size=" + size + ", url=" + url + "]";
 	}
-	
-	
-
 }

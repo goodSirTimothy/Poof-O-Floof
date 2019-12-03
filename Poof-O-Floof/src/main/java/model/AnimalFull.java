@@ -22,9 +22,9 @@ public class AnimalFull {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AnimalFull(int animalId, String animalType, String species, String breedPrimary, String breedSecondary,
+	public AnimalFull(int animalId, String animalType, String species, String breedPrimary, String breedSecondary,=
 			String breedMixed, String colorPrimary, String colorSecondary, String colorTertiary, int age, String gender,
-			double size, String coat, String status, String url) {
+			double size, String coat, String status, String url) {=
 		super();
 		this.animalId = animalId;
 		this.animalType = animalType;
@@ -273,6 +273,4 @@ public class AnimalFull {
 				+ colorTertiary + ", age=" + age + ", gender=" + gender + ", size=" + size + ", coat=" + coat
 				+ ", status=" + status + ", url=" + url + "]";
 	}
-	
-
 }
