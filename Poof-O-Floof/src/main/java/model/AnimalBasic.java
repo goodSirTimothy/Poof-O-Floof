@@ -9,7 +9,7 @@ public class AnimalBasic {
 	private String gender;
 	private double size;
 	private String url;
-	
+
 	public AnimalBasic() {
 		super();
 		// TODO Auto-generated constructor stub
