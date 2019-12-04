@@ -7,6 +7,9 @@ public interface AnimalDao {
 	/************************************************
 	 * 					Save Logic					*
 	 ***********************************************/
+
+	boolean saveBasicAnimal(AnimalBasic animalBasic);
+	
 	/**
 	 * save the information of a favorite picture
 	 * @param animalId = the animalID (with this, when can query the DB and retrieve all information
