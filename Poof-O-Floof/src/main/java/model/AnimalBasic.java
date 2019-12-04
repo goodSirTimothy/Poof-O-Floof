@@ -144,7 +144,4 @@ public class AnimalBasic {
 		return "AnimalBasic [id=" + id + ", url=" + url + ", type=" + type + ", species=" + species + ", age=" + age
 				+ ", gender=" + gender + ", size=" + size + "]";
 	}
-	
-	
-	
 }

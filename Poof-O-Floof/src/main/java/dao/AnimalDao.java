@@ -20,6 +20,8 @@ public interface AnimalDao {
 	 ***********************************************/
 	boolean updateDailyLikes(AnimalBasic animalBasic);
 	
+	//maybe have a function to reset daily likes
+	
 	boolean updateTotalLikes(AnimalBasic animalBasic);
 
 	/************************************************
