@@ -1,5 +1,15 @@
 <p>main-photo works!</p>
 
+<button (click)="getTestPhotoUrl()">
+  Get New Test Photo
+</button>
+<br />
+<br />
+
+<div>
+  <img src="{{testPhotoUrl}}">
+</div>
+
 <button (click)="getNewPhotoUrl()">
   Get New Photo
 </button>
@@ -8,7 +18,7 @@
 
 <div class="text-center">
   <div class="col-sm-8 offset-sm-2">
-      <a routerLink="/social-media" class="btn btn-link">Share</a>
+    <a routerLink="/social-media" class="btn btn-link">Share</a>
   </div>
 </div>
 
