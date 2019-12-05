@@ -30,5 +30,4 @@ public class Exceptions {
 		logger.warn("Failed to Unmarshal object of type {}", clazz.getName());
 		logger.warn("Stack Trace: ", e);
 	}
-	
 }
