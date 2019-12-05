@@ -1,0 +1,9 @@
+[WARN ] 2019-12-04 22:55:20.619 [main]  - Exception Message: Server returned HTTP response code: 401 for URL: https://api.petfinder.com/v2/animals?location=38.953524,-77.350450&radius=20
+[WARN ] 2019-12-04 22:55:20.621 [main]  - Stack Trace: 
+java.io.IOException: Server returned HTTP response code: 401 for URL: https://api.petfinder.com/v2/animals?location=38.953524,-77.350450&radius=20
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(Unknown Source) ~[?:1.8.0_231]
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(Unknown Source) ~[?:1.8.0_231]
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(Unknown Source) ~[?:1.8.0_231]
+	at petfinder.PetFinderConnectionUtil.requestAnimalsByLocation(PetFinderConnectionUtil.java:124) [classes/:?]
+	at driver.MainDriver.testPetFinder(MainDriver.java:23) [classes/:?]
+	at driver.MainDriver.main(MainDriver.java:16) [classes/:?]
