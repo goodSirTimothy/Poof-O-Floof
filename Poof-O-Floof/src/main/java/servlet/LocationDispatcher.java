@@ -33,9 +33,15 @@ public class LocationDispatcher implements Dispatcher {
 			
 			//put coordinates into thing
 			try {
-				String animalList = PetFinderConnectionUtil.getInstance().requestAnimalsByLocation(location, RADIUS);
+				PetFinderConnectionUtil pfcu = PetFinderConnectionUtil.getInstance();
+				pfcu.requestNewToken();
+				String animalList = pfcu.requestAnimalsByLocation(location, RADIUS);
+				logger.info("bless this mess \n" + animalList);
 				
 				//pass only photos to front end
+				response.getOutputStream().write(Json.write(animalList));
+				return;
+				
 			}
 			catch(MalformedURLException e) {
 				e.printStackTrace();

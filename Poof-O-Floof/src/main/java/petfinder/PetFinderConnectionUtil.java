@@ -129,7 +129,7 @@ public class PetFinderConnectionUtil {
 				out.append(line);
 			}
 			String response = out.toString();
-			logger.debug(response);
+			//logger.debug(response);
 			StringBuilder sbResponse = parseOutAnimalInformation(response);
 			if (null != sbResponse) {
 				return "[" + sbResponse + "]";
@@ -183,7 +183,7 @@ public class PetFinderConnectionUtil {
 				firstForPassed = true;
 			}
 		}
-		logger.info("returning: [{}]", sb);
+		//logger.info("returning: [{}]", sb);
 		return sb;
 	}
 
