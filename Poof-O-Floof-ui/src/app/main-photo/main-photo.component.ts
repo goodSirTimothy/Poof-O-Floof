@@ -22,7 +22,7 @@ export class MainPhotoComponent implements OnInit {
     this.photoStreamIndexArray = [...Array(photoStreamArraySize).keys()];
     this.shuffle(this.photoStreamIndexArray);
   }
-
+  
   ngOnInit() {
     this.setPhotoStreamCurrentState();
     this.setMainFramePhotoUrl();
@@ -53,7 +53,7 @@ export class MainPhotoComponent implements OnInit {
       );
   }
 
-
+  
   /**
    * Fisher–Yates shuffle algorithm, O(n) complexity
    * @param arr: Array to be shuffled
@@ -66,4 +66,5 @@ export class MainPhotoComponent implements OnInit {
     return arr;
   }
 
+  
 }
