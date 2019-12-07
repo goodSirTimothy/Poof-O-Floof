@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-// import { testPhotos } from '../testPhotos';
 import { PhotoUrlProviderService } from '../services/photo-url-provider.service';
 import { ConditionalExpr } from '@angular/compiler';
 
@@ -10,7 +9,6 @@ import { ConditionalExpr } from '@angular/compiler';
 })
 
 export class MainPhotoComponent implements OnInit {
-
   private photoStreamIndexArray: Array<number>;
   private photoDisplayIndex = 0;
   private photoStreamIndex = 0;
@@ -22,8 +20,27 @@ export class MainPhotoComponent implements OnInit {
     this.shuffle(this.photoStreamIndexArray);
   }
 
+  getTestPhotoUrl() {
+    this.photoUrlProvider.getNextPhotoUrl()
+      .subscribe(
+        data => {
+          console.log(data[this.photoStreamIndexArray[this.photoDisplayIndex]]);
+          this.testPhotoUrl = data[this.photoStreamIndexArray[this.photoDisplayIndex]].url;
+          this.photoDisplayIndex += 1;
+        }
+      );
+  }
+
+  shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+
   ngOnInit() {
-    // this.getNewPhotoUrl();
     this.setMainFramePhotoUrl();
   }
 
@@ -53,15 +70,5 @@ export class MainPhotoComponent implements OnInit {
     }
     return arr;
   }
-
-  // Photos = testPhotos;
-  // photoNum = this.Photos.length;
-  // photoUrl: string;
-
-  // getNewPhotoUrl() {
-  //   const rndPhotoNum = Math.round(Math.random() * (this.photoNum - 1));
-  //   const photoLargeUrl = this.Photos[rndPhotoNum].large;
-  //   this.photoUrl = photoLargeUrl;
-  // }
 
 }
