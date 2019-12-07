@@ -38,3 +38,9 @@ export class UserIpLocInfo {
   region: string;
   country: string;
 }
+
+export class PhotoStreamMetaData {
+  maxStreamSize: number;
+  lastPhotoStartIndex: number;
+  lastPhotoBundleSize: number;
+}

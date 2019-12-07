@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LocationService } from './services/location.service';
+import { UserIpLocInfo } from './services/models.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,20 +12,19 @@ import { Observable } from 'rxjs';
 
 export class AppComponent implements OnInit {
   title = 'Poof-O-Floof';
-  latitude: number;
-  longitude: number;
+  userIpLocInfo: UserIpLocInfo;
 
   constructor(
     private http: HttpClient,
     private locService: LocationService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { this.getUserIpLocInfo(); }
 
-  printCoords() {
+  getUserIpLocInfo() {
     this.locService.getUserIpLocInfo().subscribe(
       (data) => {
-        console.log(data);
+        this.userIpLocInfo = data;
       }
     );
   }

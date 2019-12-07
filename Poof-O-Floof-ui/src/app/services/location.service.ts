@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { UserIpLocInfo, IpGeolocComJSON, IpApiCoJSON } from './ipLocModels';
+import { UserIpLocInfo, IpGeolocComJSON, IpApiCoJSON } from './models.service';
 
 @Injectable({ providedIn: 'root' })
 
@@ -18,9 +18,8 @@ export class LocationService {
     this.ipApiCoInfo = new UserIpLocInfo();
     this.ipGeoLocComInfo = new UserIpLocInfo();
     this.getRespFromIpApiCo(); // Main ip geolocation service. 30,000 req/mo.
-    this.getRespFromIpGeoLocCom(); // Fallback ip geolocation service. 2 req/s.
-    this.getCoordsByPermission(); // Will overwrite the coords with user-provided fine location.
-
+    this.getRespFromIpGeoLocCom(); // Fallback ip geolocation service. 2 req/s but no monthly limit.
+    this.getCoordsByPermission(); // Will overwrite the coords if user provides the fine location.
   }
 
   getUserIpLocInfo(): Observable<UserIpLocInfo> {
