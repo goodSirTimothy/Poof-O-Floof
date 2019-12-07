@@ -13,12 +13,20 @@ export class MainPhotoComponent implements OnInit {
   private photoStreamIndex = 0;
   private mainFramePhotoUrl: string;
   private psCurrentState: PhotoStreamMetaData;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 79aa4852fc2d5f1132d77d9562868af50f51f06b
   constructor(private photoUrlProvider: PhotoUrlProviderService) {
     this.psCurrentState = new PhotoStreamMetaData();
     const photoStreamArraySize = this.photoUrlProvider.getMaxPhotoStreamSize();
     this.photoStreamIndexArray = [...Array(photoStreamArraySize).keys()];
     this.shuffle(this.photoStreamIndexArray);
   }
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 79aa4852fc2d5f1132d77d9562868af50f51f06b
   ngOnInit() {
     this.setPhotoStreamCurrentState();
     this.setMainFramePhotoUrl();
@@ -35,8 +43,19 @@ export class MainPhotoComponent implements OnInit {
           this.mainFramePhotoUrl = data[this.photoStreamIndex].url;
         }
       );
+
   }
 
+  setPhotoStreamCurrentState() {
+    this.photoUrlProvider.getPhotoStreamCurrentState()
+      .subscribe(
+        data => {
+          this.psCurrentState = data;
+        }
+      );
+  }
+
+<<<<<<< HEAD
   setPhotoStreamCurrentState() {
     this.photoUrlProvider.photoStreamCurrentState$()
       .subscribe(
@@ -45,6 +64,9 @@ export class MainPhotoComponent implements OnInit {
         }
       );
   }
+=======
+  
+>>>>>>> 79aa4852fc2d5f1132d77d9562868af50f51f06b
   /**
    * Fisher–Yates shuffle algorithm, O(n) complexity
    * @param arr: Array to be shuffled
@@ -56,4 +78,9 @@ export class MainPhotoComponent implements OnInit {
     }
     return arr;
   }
+<<<<<<< HEAD
+=======
+
+  
+>>>>>>> 79aa4852fc2d5f1132d77d9562868af50f51f06b
 }
