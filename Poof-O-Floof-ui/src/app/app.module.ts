@@ -12,6 +12,8 @@ import { TestSocialComponent } from './social-media/test-social/test-social.comp
 import { TwitterComponent } from './twitter/twitter.component';
 import { FacebookComponent } from './facebook/facebook.component';
 import { PinterestComponent } from './pinterest/pinterest.component';
+import { NavComponent } from './nav/nav.component';
+import { FavoritesComponent } from './favorites/favorites.component';
 
 @NgModule({
   imports: [
@@ -23,7 +25,8 @@ import { PinterestComponent } from './pinterest/pinterest.component';
       { path: 'test-social', component: TestSocialComponent },
       { path: 'twitter', component: TwitterComponent },
       { path: 'facebook' , component: FacebookComponent },
-      { path: 'pinterest' , component: PinterestComponent }
+      { path: 'pinterest' , component: PinterestComponent },
+      { path: 'favorites' , component: FavoritesComponent }
     ]),
     JwSocialButtonsModule
   ],
@@ -34,7 +37,9 @@ import { PinterestComponent } from './pinterest/pinterest.component';
     TestSocialComponent,
     TwitterComponent,
     FacebookComponent,
-    PinterestComponent
+    PinterestComponent,
+    NavComponent,
+    FavoritesComponent
   ],
   bootstrap: [AppComponent],
   providers: []
