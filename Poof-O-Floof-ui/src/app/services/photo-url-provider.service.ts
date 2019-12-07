@@ -40,7 +40,7 @@ export class PhotoUrlProviderService {
   getPhotoStreamCurrentState() {
     return this.photoStreamCurrentState$.asObservable();
   }
-
+  
 }
 
 export interface PhotoBundleJSON {
