@@ -37,6 +37,10 @@ export class PhotoUrlProviderService {
     return this.photoStream$.asObservable();
   }
 
+  getPhotoStreamCurrentState() {
+    return this.photoStreamCurrentState$.asObservable();
+  }
+
 }
 
 export interface PhotoBundleJSON {
