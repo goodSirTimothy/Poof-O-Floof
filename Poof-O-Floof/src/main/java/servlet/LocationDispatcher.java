@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import model.LocationRequest;
 import petfinder.PetFinderConnectionUtil;
 import util.Json;
 
@@ -25,10 +26,15 @@ public class LocationDispatcher implements Dispatcher {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
+		//to do:
+		//take in json object instead of string
+		//write list of animals in way thats easier to work with
+		//pagination or something
 		try {
 			logger.info("does this work?????");
 			//get coordinates
-			String location = (String) Json.read(request.getInputStream(), String.class);
+			LocationRequest locReq = (LocationRequest) Json.read(request.getInputStream(), LocationRequest.class);
+			String location = locReq.getCoords();
 			logger.info("location is: " + location);
 			
 			//put coordinates into thing
