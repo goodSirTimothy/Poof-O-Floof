@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoUrlProviderService } from '../services/photo-url-provider.service';
+import { PhotoStreamMetaData } from '../services/models.service';
 import { ConditionalExpr } from '@angular/compiler';
 
 @Component({
@@ -13,34 +14,17 @@ export class MainPhotoComponent implements OnInit {
   private photoDisplayIndex = 0;
   private photoStreamIndex = 0;
   private mainFramePhotoUrl: string;
+  private psCurrentState: PhotoStreamMetaData;
 
   constructor(private photoUrlProvider: PhotoUrlProviderService) {
+    this.psCurrentState = new PhotoStreamMetaData();
     const photoStreamArraySize = this.photoUrlProvider.getMaxPhotoStreamSize();
     this.photoStreamIndexArray = [...Array(photoStreamArraySize).keys()];
     this.shuffle(this.photoStreamIndexArray);
   }
-
-  getTestPhotoUrl() {
-    this.photoUrlProvider.getNextPhotoUrl()
-      .subscribe(
-        data => {
-          console.log(data[this.photoStreamIndexArray[this.photoDisplayIndex]]);
-          this.testPhotoUrl = data[this.photoStreamIndexArray[this.photoDisplayIndex]].url;
-          this.photoDisplayIndex += 1;
-        }
-      );
-  }
-
-  shuffle(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
-  }
-
-
+  
   ngOnInit() {
+    this.setPhotoStreamCurrentState();
     this.setMainFramePhotoUrl();
   }
 
@@ -57,8 +41,19 @@ export class MainPhotoComponent implements OnInit {
           this.mainFramePhotoUrl = data[this.photoStreamIndex].url;
         }
       );
+
   }
 
+  setPhotoStreamCurrentState() {
+    this.photoUrlProvider.getPhotoStreamCurrentState()
+      .subscribe(
+        data => {
+          this.psCurrentState = data;
+        }
+      );
+  }
+
+  
   /**
    * Fisher–Yates shuffle algorithm, O(n) complexity
    * @param arr: Array to be shuffled
@@ -71,4 +66,5 @@ export class MainPhotoComponent implements OnInit {
     return arr;
   }
 
+  
 }
