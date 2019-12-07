@@ -10,7 +10,6 @@ import { ConditionalExpr } from '@angular/compiler';
 })
 
 export class MainPhotoComponent implements OnInit {
-
   private photoStreamIndexArray: Array<number>;
   private photoDisplayIndex = 0;
   private photoStreamIndex = 0;
