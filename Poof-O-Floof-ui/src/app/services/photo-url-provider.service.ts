@@ -23,30 +23,12 @@ export class PhotoUrlProviderService {
     private locService: LocationService
   ) {
     this.photoStreamCurrentState.maxStreamSize = this.MAX_PHOTO_STREAM_SIZE;
-    this.getUserIpLocInfo();
+    this.locService.getUserIpLocInfo();
     // this.requestANewPhotoBundle();
   }
 
   getMaxPhotoStreamSize() {
     return this.MAX_PHOTO_STREAM_SIZE;
-  }
-
-  // requestANewPhotoBundleTest() {
-  //   this.http.get<TestPhotoJSON>(this.TEST_PHOTO_BUNDLE_URL)
-  //     .subscribe(data => {
-  //       this.photoStreamCurrentState.lastPhotoBundleSize = Object.keys(data).length;
-  //       this.photoStreamCurrentState$.next(this.photoStreamCurrentState);
-  //       this.photoStream$.next(data);
-  //     });
-  // }
-
-  getUserIpLocInfo() {
-    this.locService.getUserIpLocInfo().subscribe(
-      (data) => {
-        this.userIpLocInfo = data;
-        console.log(data);
-      }
-    );
   }
 
   requestANewPhotoBundle(ipLoc: UserIpLocInfo) {
@@ -78,6 +60,7 @@ export class PhotoUrlProviderService {
 export interface AnimalPhotoJSON {
   animalId: number;
   photoId: number;
+  type: string;
   fullUrl: string;
 }
 
