@@ -1,40 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { PhotoUrlProviderService } from '../services/photo-url-provider.service';
+import { PhotoUrlProviderService, TestPhotoJSON } from '../services/photo-url-provider.service';
 import { PhotoStreamMetaData } from '../services/models.service';
+import { ReplaySubject, BehaviorSubject } from 'rxjs';
 import { ConditionalExpr } from '@angular/compiler';
+
 @Component({
   selector: 'app-main-photo',
   templateUrl: './main-photo.component.html',
   styleUrls: ['./main-photo.component.css']
 })
+
 export class MainPhotoComponent implements OnInit {
   private photoStreamIndexArray: Array<number>;
   private photoDisplayIndex = 0;
   private photoStreamIndex = 0;
   private mainFramePhotoUrl: string;
-  private psCurrentState: PhotoStreamMetaData;
-<<<<<<< HEAD
-=======
+  // private psCurrentState: PhotoStreamMetaData;
 
->>>>>>> 79aa4852fc2d5f1132d77d9562868af50f51f06b
   constructor(private photoUrlProvider: PhotoUrlProviderService) {
-    this.psCurrentState = new PhotoStreamMetaData();
+    // this.psCurrentState = new PhotoStreamMetaData();
     const photoStreamArraySize = this.photoUrlProvider.getMaxPhotoStreamSize();
     this.photoStreamIndexArray = [...Array(photoStreamArraySize).keys()];
-    this.shuffle(this.photoStreamIndexArray);
+    // this.shuffle(this.photoStreamIndexArray);
   }
-<<<<<<< HEAD
-=======
-  
->>>>>>> 79aa4852fc2d5f1132d77d9562868af50f51f06b
+
   ngOnInit() {
     this.setPhotoStreamCurrentState();
     this.setMainFramePhotoUrl();
+    // const photoStreamArraySize = this.psCurrentState.maxStreamSize;
+    // console.log(photoStreamArraySize);
   }
+
   nextRandomPhoto() {
     this.setMainFramePhotoUrl();
     this.photoDisplayIndex += 1;
   }
+
+
   setMainFramePhotoUrl() {
     this.photoUrlProvider.getPhotoStream()
       .subscribe(
@@ -43,30 +45,17 @@ export class MainPhotoComponent implements OnInit {
           this.mainFramePhotoUrl = data[this.photoStreamIndex].url;
         }
       );
-
   }
 
   setPhotoStreamCurrentState() {
     this.photoUrlProvider.getPhotoStreamCurrentState()
       .subscribe(
         data => {
-          this.psCurrentState = data;
+          // this.psCurrentState = data;
         }
       );
   }
 
-<<<<<<< HEAD
-  setPhotoStreamCurrentState() {
-    this.photoUrlProvider.photoStreamCurrentState$()
-      .subscribe(
-        data => {
-          this.psCurrentState = data;
-        }
-      );
-  }
-=======
-  
->>>>>>> 79aa4852fc2d5f1132d77d9562868af50f51f06b
   /**
    * Fisher–Yates shuffle algorithm, O(n) complexity
    * @param arr: Array to be shuffled
@@ -78,9 +67,5 @@ export class MainPhotoComponent implements OnInit {
     }
     return arr;
   }
-<<<<<<< HEAD
-=======
 
-  
->>>>>>> 79aa4852fc2d5f1132d77d9562868af50f51f06b
 }
