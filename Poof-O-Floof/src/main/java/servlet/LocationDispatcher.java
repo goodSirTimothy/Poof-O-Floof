@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.LocationRequest;
+import model.Photo;
 import petfinder.PetFinderConnectionUtil;
 import util.Json;
 
@@ -30,7 +32,7 @@ public class LocationDispatcher implements Dispatcher {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		//to do:
-		//take in json object instead of string
+		//take in json object instead of string - done
 		//write list of animals in way thats easier to work with
 		//pagination or something
 		try {
@@ -44,7 +46,7 @@ public class LocationDispatcher implements Dispatcher {
 			try {
 				PetFinderConnectionUtil pfcu = PetFinderConnectionUtil.getInstance();
 				pfcu.requestNewToken();
-				String animalList = pfcu.requestAnimalsByLocation(location, RADIUS);
+				List<Photo> animalList = pfcu.requestAnimalsByLocation(location, RADIUS);
 				logger.info("bless this mess \n" + animalList);
 				
 				//pass only photos to front end

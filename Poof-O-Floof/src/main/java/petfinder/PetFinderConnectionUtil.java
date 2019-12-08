@@ -7,7 +7,9 @@ import java.io.PrintStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,6 +22,8 @@ import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import util.Json;
+
+import model.Photo;
 
 /**
  * 
@@ -113,7 +117,7 @@ public class PetFinderConnectionUtil {
 	 * @param radius:   in miles
 	 * @throws MalformedURLException
 	 */
-	public String requestAnimalsByLocation(String location, int radius) throws MalformedURLException {
+	public List<Photo> requestAnimalsByLocation(String location, int radius) throws MalformedURLException {
 		String params = String.format("?location=%s&radius=%d", location, radius);
 		URL apiUrl = new URL(PET_FINDER_API_ANIMALS + params);
 		BufferedReader reader = null;
@@ -130,12 +134,28 @@ public class PetFinderConnectionUtil {
 				out.append(line);
 			}
 			String response = out.toString();
+<<<<<<< HEAD
 			// logger.debug(response);
 			StringBuilder sbResponse = parseOutAnimalInformation(response);
 			if (null != sbResponse) {
 				return "[" + sbResponse + "]";
 			} else {
 				logger.debug("animal Json object was null {}", sbResponse);
+=======
+			//logger.debug(response);
+			//StringBuilder sbResponse = parseOutAnimalInformation(response);
+//			if (null != sbResponse) {
+//				return "[" + sbResponse + "]";
+//			} else {
+//				logger.debug("animal Json object was null {}", sbResponse);
+//			}
+			List<Photo> animalList = parseAnimalInformationAsList(response);
+			if(null != animalList) {
+				return animalList;
+			}
+			else {
+				logger.debug("animal Json object was null {}", animalList);
+>>>>>>> 6002f987c34e4c52b33ca9fac789d48adaadfa66
 			}
 		} catch (Exception e) {
 			logger.warn("Exception Message: {}", e.getMessage());
@@ -184,6 +204,35 @@ public class PetFinderConnectionUtil {
 			}
 		}
 		return sb;
+	}
+	
+	private List<Photo> parseAnimalInformationAsList(String response){
+		JsonNode jsonNode = null;
+		ObjectMapper om = new ObjectMapper();
+		try {
+			jsonNode = om.readValue(response, JsonNode.class);
+		}
+		catch (IOException e) {
+			logger.warn("IOException Message: {}", e.getMessage());
+			logger.warn("Stack Trace: ", e);
+		}
+		JsonNode animals = jsonNode.get("animals");
+		List<Photo> animalList = new ArrayList<Photo>();
+		
+		for(JsonNode animal : animals) {
+			if(null != (animal.get("photos").get(0))) {
+				for(JsonNode photo : animal.get("photos")) {
+					String urlString = "" + photo.get("full");
+					String[] urlArray = urlString.split("=");
+					if(urlArray.length > 1) {
+						String photoId = urlArray[1];
+						animalList.add(new Photo("" + animal.get("id"), photoId, urlString));
+					}
+				}
+			}
+		}
+		logger.info(animalList);
+		return animalList;
 	}
 
 	public String getCurrentToken() {
