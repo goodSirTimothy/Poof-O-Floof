@@ -50,6 +50,7 @@ public class LocationDispatcher implements Dispatcher {
 				logger.info("bless this mess \n" + animalList);
 				
 				//pass only photos to front end
+				response.setHeader("Content-type", "application/json");
 				response.getWriter().write(animalList);
 				// response.getOutputStream().write(Json.write(animalList));
 				return;
