@@ -2,10 +2,10 @@
 ## 2019/12/08
 * The app has barebone functionality: POST ip-location to server, and display the animal photos
 * Things that need to be done before presentation:
-  ** User Login/View Favorite: Boris
-  ** App routing/Nav Bar/Social media sharing: Gabby
-  ** Fix the location Service/Photo Randomization: Hao
-  ** User Favorite/Like Statistics or graph: Tim
+  * User Login/View Favorite: Boris
+  * App routing/Nav Bar/Social media sharing: Gabby
+  * Fix the location Service/Photo Randomization: Hao
+  * User Favorite/Like Statistics or graph: Tim
 
 ## 2019/12/04 Hope to finish basic functionalities by Friday
 * Stage one basic function: client-side POST a ip-location JSON to Java server, and get a big JSON bundling multiple animal photos of all sizes 
