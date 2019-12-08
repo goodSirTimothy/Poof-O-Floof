@@ -182,11 +182,13 @@ public class PetFinderConnectionUtil {
 					if (urlArray.length > 1) {
 						sb.append("{\"id\":" + animal.get("id") 
 								+ ",\"photoId\":" + urlArray[1]
+								+ ",\"type\":" + animal.get("type")
 								+ ",\"fullUrl\":" + "\""+urlArray[0]+"="+urlArray[1]+"\"" + "}");
 						{	// logger information
 							logger.info("\n{"
 										+ "\n\t\"id\":" + animal.get("id") 
 										+ ",\n\t\"photoId\":" + urlArray[1]
+										+ ",\"type\":" + animal.get("type")
 										+ ",\n\t\"fullUrl\":" + "\""
 											+urlArray[0]+"="+urlArray[1]+"\"" 
 									+ "\n}");
