@@ -20,7 +20,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import util.Json;
 
 import model.Photo;
 
@@ -133,6 +134,14 @@ public class PetFinderConnectionUtil {
 				out.append(line);
 			}
 			String response = out.toString();
+<<<<<<< HEAD
+			// logger.debug(response);
+			StringBuilder sbResponse = parseOutAnimalInformation(response);
+			if (null != sbResponse) {
+				return "[" + sbResponse + "]";
+			} else {
+				logger.debug("animal Json object was null {}", sbResponse);
+=======
 			//logger.debug(response);
 			//StringBuilder sbResponse = parseOutAnimalInformation(response);
 //			if (null != sbResponse) {
@@ -146,6 +155,7 @@ public class PetFinderConnectionUtil {
 			}
 			else {
 				logger.debug("animal Json object was null {}", animalList);
+>>>>>>> 6002f987c34e4c52b33ca9fac789d48adaadfa66
 			}
 		} catch (Exception e) {
 			logger.warn("Exception Message: {}", e.getMessage());
@@ -163,38 +173,36 @@ public class PetFinderConnectionUtil {
 	 * @return StringBuilder JSON value OR NULL. if null something went wrong.
 	 */
 	private StringBuilder parseOutAnimalInformation(String response) {
-		JsonNode jsonNode = null;
-		ObjectMapper om = new ObjectMapper();
-		try {
-			jsonNode = om.readValue(response, JsonNode.class);
-		} catch (IOException e) {
-			logger.warn("IOException Message: {}", e.getMessage());
-			logger.warn("Stack Trace: ", e);
-		}
-		JsonNode animals = jsonNode.get("animals");
+		JsonNode jsonNode = Json.readString(response, PetFinderConnectionUtil.class);
 		StringBuilder sb = new StringBuilder();
 		boolean firstForPassed = false;
-		// Create Json
-		for (JsonNode animal : animals) {
+		// Create Json formatted String
+		for (JsonNode animal : jsonNode.get("animals")) {
 			if (null != (animal.get("photos").get(0))) {
 				for (JsonNode photo : animal.get("photos")) {
 					if (firstForPassed) {
 						sb.append(",");
+					} else {
+						firstForPassed = true;
 					}
 					String urlString = "" + photo.get("full");
-					String[] urlArray = urlString.split("=");
+					String[] urlArray = urlString.replace("\"", "").split("=");
 					if (urlArray.length > 1) {
-						String photoId = urlArray[1];
-						sb.append("{\"id\":" + animal.get("id") + ",\"photoId\":" + photoId + ",\"fullUrl\":" + urlString + "}");
-//						logger.info("\n{\n\t\"id\":" + animal.get("id") 
-//									+ ",\n\t\"photoId\":" + photoId 
-//									+ ",\n\t\"fullUrl\":" + urlString + "\n},");
+						sb.append("{\"id\":" + animal.get("id") 
+								+ ",\"photoId\":" + urlArray[1]
+								+ ",\"fullUrl\":" + "\""+urlArray[0]+"="+urlArray[1]+"\"" + "}");
+						{	// logger information
+							logger.info("\n{"
+										+ "\n\t\"id\":" + animal.get("id") 
+										+ ",\n\t\"photoId\":" + urlArray[1]
+										+ ",\n\t\"fullUrl\":" + "\""
+											+urlArray[0]+"="+urlArray[1]+"\"" 
+									+ "\n}");
+						}
 					}
 				}
-				firstForPassed = true;
 			}
 		}
-		//logger.info("returning: [{}]", sb);
 		return sb;
 	}
 	

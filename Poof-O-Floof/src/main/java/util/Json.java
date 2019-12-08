@@ -3,8 +3,11 @@ package util;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
+import servlet.LocationDispatcher;
 
 public class Json {
 	
@@ -36,6 +39,29 @@ public class Json {
 			return mapper.readValue(is, clazz);
 		} catch (IOException e) {
 			Exceptions.logJsonUnmarshalException(e, clazz);
+			return null;
+		}
+	}
+	
+	/**
+	 * Reads a String Json value and palces information within JsonNode.class
+	 * @param str = the String Json that was inputted
+	 * @param clazz = class using this method
+	 * @return return an ObjectMapper value OR null.
+	 */
+	public static JsonNode readString(String str, Class<?> clazz) {
+		try {
+			return mapper.readValue(str, JsonNode.class);
+		} catch (IOException e) {
+			Exceptions.logJsonUnmarshalException(e, clazz);
+			return null;
+		}
+	}
+	public static byte[] writeString(String str, Class<?> clazz) {
+		try {
+			return mapper.writeValueAsBytes(str);
+		} catch (IOException e) {
+			Exceptions.logJsonMarshalException(e, clazz);
 			return null;
 		}
 	}
