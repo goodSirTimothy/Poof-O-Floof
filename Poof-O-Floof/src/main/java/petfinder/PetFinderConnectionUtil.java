@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import util.Json;
 
@@ -117,7 +118,7 @@ public class PetFinderConnectionUtil {
 	 * @param radius:   in miles
 	 * @throws MalformedURLException
 	 */
-	public List<Photo> requestAnimalsByLocation(String location, int radius) throws MalformedURLException {
+	public String requestAnimalsByLocation(String location, int radius) throws MalformedURLException {
 		String params = String.format("?location=%s&radius=%d", location, radius);
 		URL apiUrl = new URL(PET_FINDER_API_ANIMALS + params);
 		BufferedReader reader = null;
@@ -134,29 +135,20 @@ public class PetFinderConnectionUtil {
 				out.append(line);
 			}
 			String response = out.toString();
-<<<<<<< HEAD
-			// logger.debug(response);
+			//logger.debug(response);
 			StringBuilder sbResponse = parseOutAnimalInformation(response);
 			if (null != sbResponse) {
 				return "[" + sbResponse + "]";
 			} else {
 				logger.debug("animal Json object was null {}", sbResponse);
-=======
-			//logger.debug(response);
-			//StringBuilder sbResponse = parseOutAnimalInformation(response);
-//			if (null != sbResponse) {
-//				return "[" + sbResponse + "]";
-//			} else {
-//				logger.debug("animal Json object was null {}", sbResponse);
+			}
+//			List<Photo> animalList = parseAnimalInformationAsList(response);
+//			if(null != animalList) {
+//				return animalList;
 //			}
-			List<Photo> animalList = parseAnimalInformationAsList(response);
-			if(null != animalList) {
-				return animalList;
-			}
-			else {
-				logger.debug("animal Json object was null {}", animalList);
->>>>>>> 6002f987c34e4c52b33ca9fac789d48adaadfa66
-			}
+//			else {
+//				logger.debug("animal Json object was null {}", animalList);
+//			}
 		} catch (Exception e) {
 			logger.warn("Exception Message: {}", e.getMessage());
 			logger.warn("Stack Trace: ", e);
@@ -226,7 +218,7 @@ public class PetFinderConnectionUtil {
 					String[] urlArray = urlString.split("=");
 					if(urlArray.length > 1) {
 						String photoId = urlArray[1];
-						animalList.add(new Photo("" + animal.get("id"), photoId, urlString));
+						animalList.add(new Photo("" + animal.get("id"), photoId.replace("\"", ""), urlString.replace("\"", "")));
 					}
 				}
 			}
