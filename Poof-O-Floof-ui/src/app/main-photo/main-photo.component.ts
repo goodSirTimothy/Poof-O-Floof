@@ -30,16 +30,19 @@ export class MainPhotoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.addMorePhotos();
+    this.setPhotoStreamCurrentState();
+    this.setMainFramePhotoUrl();
+    // const photoStreamArraySize = this.psCurrentState.maxStreamSize;
+    // console.log(photoStreamArraySize);
+  }
+
+  addMorePhotos() {
     this.locService.getUserIpLocInfo().subscribe(
       userIpLoc => {
         this.photoUrlProvider.requestANewPhotoBundle(userIpLoc);
       }
     );
-    // this.photoUrlProvider.requestANewPhotoBundle(this.mockIpLocInfo);
-    this.setPhotoStreamCurrentState();
-    this.setMainFramePhotoUrl();
-    // const photoStreamArraySize = this.psCurrentState.maxStreamSize;
-    // console.log(photoStreamArraySize);
   }
 
   nextRandomPhoto() {

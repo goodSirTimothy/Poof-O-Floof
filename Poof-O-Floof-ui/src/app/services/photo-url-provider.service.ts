@@ -13,7 +13,6 @@ export class PhotoUrlProviderService {
   private photoBundleSize: number;
   private userIpLocInfo: UserIpLocInfo;
 
-  // private photoStream$ = new ReplaySubject<TestPhotoJSON>(this.MAX_PHOTO_STREAM_SIZE);
   private photoStream$ = new ReplaySubject<AnimalPhotoJSON>(this.MAX_PHOTO_STREAM_SIZE);
   private photoStreamCurrentState = new PhotoStreamMetaData();
   private photoStreamCurrentState$ = new BehaviorSubject<PhotoStreamMetaData>(undefined);
@@ -24,7 +23,6 @@ export class PhotoUrlProviderService {
   ) {
     this.photoStreamCurrentState.maxStreamSize = this.MAX_PHOTO_STREAM_SIZE;
     this.locService.getUserIpLocInfo();
-    // this.requestANewPhotoBundle();
   }
 
   getMaxPhotoStreamSize() {
@@ -32,18 +30,17 @@ export class PhotoUrlProviderService {
   }
 
   requestANewPhotoBundle(ipLoc: UserIpLocInfo) {
-    console.log('inside requestANewPhotoBundle');
-    // console.log(this.userIpLocInfo);
     this.http.post<AnimalPhotoJSON>(this.PHOTO_BUNDLE_URL, JSON.stringify(ipLoc))
       .subscribe(
         data => {
           this.photoStreamCurrentState.lastPhotoBundleSize = Object.keys(data).length;
+          console.log('NewBundleSize:' + this.photoStreamCurrentState.lastPhotoBundleSize);
           this.photoStreamCurrentState$.next(this.photoStreamCurrentState);
           this.photoStream$.next(data);
-          console.log(data);
         },
         error => {
-          console.error(error.error);
+          console.log('user location is not ready.');
+          // console.error(error.error);
         }
       );
   }
