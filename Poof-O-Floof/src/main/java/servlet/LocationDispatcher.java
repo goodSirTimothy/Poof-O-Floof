@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import model.LocationRequest;
 import petfinder.PetFinderConnectionUtil;
 import util.Json;
@@ -21,6 +23,7 @@ public class LocationDispatcher implements Dispatcher {
 
 	@Override
 	public boolean supports(HttpServletRequest request) {
+		logger.info(isPostLocation(request));
 		return isPostLocation(request);
 	}
 
@@ -45,7 +48,7 @@ public class LocationDispatcher implements Dispatcher {
 				logger.info("bless this mess \n" + animalList);
 				
 				//pass only photos to front end
-				response.getOutputStream().write(Json.write(animalList));
+				response.getWriter().write(animalList);
 				return;
 				
 			}
