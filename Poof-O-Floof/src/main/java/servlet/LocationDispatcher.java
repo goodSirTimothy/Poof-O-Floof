@@ -46,11 +46,12 @@ public class LocationDispatcher implements Dispatcher {
 			try {
 				PetFinderConnectionUtil pfcu = PetFinderConnectionUtil.getInstance();
 				pfcu.requestNewToken();
-				List<Photo> animalList = pfcu.requestAnimalsByLocation(location, RADIUS);
+				String animalList = pfcu.requestAnimalsByLocation(location, RADIUS);
 				logger.info("bless this mess \n" + animalList);
 				
 				//pass only photos to front end
 				response.getWriter().write(animalList);
+				// response.getOutputStream().write(Json.write(animalList));
 				return;
 				
 			}

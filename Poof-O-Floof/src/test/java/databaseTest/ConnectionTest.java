@@ -11,8 +11,8 @@ public class ConnectionTest {
 	private static Logger logger = LogManager.getLogger(ConnectionUtil.class);
 
 	// Smoke Test
-	@Test
-	public void connectionFactory_SmokeTest() {
-		assert ConnectionUtil.getConnection() != null;
-	}
+//	@Test
+//	public void connectionFactory_SmokeTest() {
+//		assert ConnectionUtil.getConnection() != null;
+//	}
 }
