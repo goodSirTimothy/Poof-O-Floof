@@ -14,17 +14,15 @@ import petfinder.PetFinderConnectionUtil;
 import util.Json;
 
 public class LocationDispatcher implements Dispatcher {
-
-	private static final Logger logger = LogManager.getLogger();
+  private static final Logger logger = LogManager.getLogger();
 	private static PetFinderConnectionUtil pfcu = PetFinderConnectionUtil.getInstance();
+  private static final int RADIUS = 50;
 
-	private static final int RADIUS = 10;
-
-	@Override
-	public boolean supports(HttpServletRequest request) {
-		logger.info(isPostLocation(request));
-		return isPostLocation(request);
-	}
+  @Override
+  public boolean supports(HttpServletRequest request) {
+    logger.info(isPostLocation(request));
+    return isPostLocation(request);
+  }
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -36,13 +34,12 @@ public class LocationDispatcher implements Dispatcher {
 				String location = locReq.getCoords();
 				logger.info("location is: " + location);
 				try {
-					logger.info("location is: " + location);
 					pfcu.requestNewToken();
 					if (location != null) {
-						String animals = pfcu.requestAnimalsByLocation(location, RADIUS);
-						logger.info("bless this mess \n" + animals);
+						String animals = pfcu.requestAnimalsByLocation(location, RADIUS);;
 
 						// pass only photos to front end
+            logger.debug("A Photo Bundle is sent to the requester.");
 						logger.info("Animal sent:" + animals);
 						response.setHeader("Content-type", "application/json");
 						response.getWriter().write(animals);
@@ -57,8 +54,9 @@ public class LocationDispatcher implements Dispatcher {
 		}
 	}
 
-	private boolean isPostLocation(HttpServletRequest req) {
-		return req.getMethod().equals("POST") && req.getRequestURI().contentEquals("/Poof-O-Floof/api/location");
-	}
+  private boolean isPostLocation(HttpServletRequest req) {
+    return req.getMethod().equals("POST")
+        && req.getRequestURI().contentEquals("/Poof-O-Floof/api/location");
+  }
 
 }

@@ -16,16 +16,9 @@ export class MainPhotoComponent implements OnInit {
   private photoDisplayIndex = 0;
   private photoStreamIndex = 0;
   private mainFramePhotoUrl: string;
+  private mainFramePhotoType: string;
   private LARGE_URL_SUFFIX = '&width=600';
-  private mockIpLocInfo: UserIpLocInfo = {
-    city: 'Herndon',
-    coords: '38.9841,-77.3672',
-    country: 'United States',
-    ip: '2600:8806:4000:3d0:b561:f3f4:f8ef:3d44',
-    postal: '20170',
-    region: 'Virginia'
-  };
-  // private psCurrentState: PhotoStreamMetaData;
+  private psCurrentState: PhotoStreamMetaData;
 
   constructor(
     private photoUrlProvider: PhotoUrlProviderService,
@@ -34,16 +27,24 @@ export class MainPhotoComponent implements OnInit {
     // this.psCurrentState = new PhotoStreamMetaData();
     const photoStreamArraySize = this.photoUrlProvider.getMaxPhotoStreamSize();
     this.photoStreamIndexArray = [...Array(photoStreamArraySize).keys()];
+    this.setPhotoStreamCurrentState();
     // this.shuffle(this.photoStreamIndexArray);
   }
 
   ngOnInit() {
-
-    this.photoUrlProvider.requestANewPhotoBundle(this.mockIpLocInfo);
+    this.addMorePhotos();
     this.setPhotoStreamCurrentState();
     this.setMainFramePhotoUrl();
     // const photoStreamArraySize = this.psCurrentState.maxStreamSize;
-    // console.log(photoStreamArraySize);
+    console.log(this.photoStreamIndexArray);
+  }
+
+  addMorePhotos() {
+    this.locService.getUserIpLocInfo().subscribe(
+      userIpLoc => {
+        this.photoUrlProvider.requestANewPhotoBundle(userIpLoc);
+      }
+    );
   }
 
   nextRandomPhoto() {
@@ -57,6 +58,7 @@ export class MainPhotoComponent implements OnInit {
         data => {
           this.photoStreamIndex = this.photoStreamIndexArray[this.photoDisplayIndex];
           this.mainFramePhotoUrl = data[this.photoStreamIndex].fullUrl + this.LARGE_URL_SUFFIX;
+          this.mainFramePhotoType = data[this.photoStreamIndex].type;
         }
       );
   }
@@ -65,7 +67,7 @@ export class MainPhotoComponent implements OnInit {
     this.photoUrlProvider.getPhotoStreamCurrentState()
       .subscribe(
         data => {
-          // this.psCurrentState = data;
+          this.psCurrentState = data;
         }
       );
   }
