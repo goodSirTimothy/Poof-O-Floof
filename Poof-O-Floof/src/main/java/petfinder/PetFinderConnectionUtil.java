@@ -36,13 +36,15 @@ import model.Photo;
  */
 public class PetFinderConnectionUtil {
 	private static final PetFinderConnectionUtil instance = new PetFinderConnectionUtil();
+	private static PetfinderUrlVisitor petVisitor = PetfinderUrlVisitor.getInstance();
 
 	private static final Pattern pat = Pattern.compile(".*\"access_token\"\\s*:\\s*\"([^\"]+)\".*");
 	private static Logger logger = LogManager.getRootLogger();
-	private static PetfinderUrlVisitor petVisitor = new PetfinderUrlVisitor();
 	
 	private static final String authentication = Base64.getEncoder().encodeToString(petVisitor.getAuth().getBytes());
 	private static String currentToken;
+	
+	private static boolean pageMaxSet = false;
 
 	private PetFinderConnectionUtil() {
 	}
@@ -97,9 +99,7 @@ public class PetFinderConnectionUtil {
 	 * @throws MalformedURLException
 	 */
 	public String requestAnimalsByLocation(String location, int distance) throws MalformedURLException {
-		URL apiUrl = petVisitor.urlBuilder(location, null, distance, 0);
-		//petVisitor.makePetfinderURL(
-		//		petVisitor.getPetFinderAnimalsString() + petVisitor.getLocationString(location, radius));
+		URL apiUrl = petVisitor.urlBuilder(location, "adoptable", distance, 1);
 		try {
 			HttpsURLConnection connection = (HttpsURLConnection) apiUrl.openConnection();
 			connection.setRequestProperty("Authorization", "Bearer " + currentToken);
@@ -132,7 +132,7 @@ public class PetFinderConnectionUtil {
 	 * @throws MalformedURLException
 	 */
 	public String requestAnimals() throws MalformedURLException {
-		URL apiUrl = petVisitor.makePetfinderURL(petVisitor.getPetFinderAnimalsString());
+		URL apiUrl = petVisitor.urlBuilder(null, null, -1, 1);
 		try {
 			HttpsURLConnection connection = (HttpsURLConnection) apiUrl.openConnection();
 			connection.setRequestProperty("Authorization", "Bearer " + currentToken);
@@ -179,7 +179,7 @@ public class PetFinderConnectionUtil {
 	 */
 	private StringBuilder parseOutAnimalInformation(String response) {
 		JsonNode jsonNode = Json.readString(response, PetFinderConnectionUtil.class);
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder("");
 		boolean firstForPassed = false;
 		// Create Json formatted String
 		for (JsonNode animal : jsonNode.get("animals")) {
@@ -193,12 +193,13 @@ public class PetFinderConnectionUtil {
 					String urlString = "" + photo.get("full");
 					String[] urlArray = urlString.replace("\"", "").split("=");
 					if (urlArray.length > 1) {
+						// add every picture to the StringBuilder. 
 						sb.append("{\"id\":" + animal.get("id") 
 								+ ",\"photoId\":" + urlArray[1] 
 								+ ",\"type\":" + animal.get("type") 
 								+ ",\"fullUrl\":" + "\"" + urlArray[0] + "=" + urlArray[1] + "\""
 								+ "}");
-						// logger information
+						// logger information in JSON format. 
 						logger.trace("\n{" + "\n\t\"id\":" + animal.get("id") 
 								+ ",\n\t\"photoId\":" + urlArray[1]
 								+ ",\"type\":" + animal.get("type") 
@@ -207,6 +208,12 @@ public class PetFinderConnectionUtil {
 					}
 				}
 			}
+		}
+		
+		// if you want to prevent wasting memory by setting an Integer everytime. once this runs, set it pageMaxSet = true;
+		if(!pageMaxSet) {
+			// pageMaxSet = true;
+			petVisitor.setRandomNumber(Integer.parseInt(jsonNode.get("pagination").get("total_pages").toString()));
 		}
 		return sb;
 	}

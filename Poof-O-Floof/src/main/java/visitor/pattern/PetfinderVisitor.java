@@ -5,7 +5,6 @@ import java.net.URL;
 
 public interface PetfinderVisitor {
 
-
 	/**
 	 * No longer in use.
 	 * @deprecated

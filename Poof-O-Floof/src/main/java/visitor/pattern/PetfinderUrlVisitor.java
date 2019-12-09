@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
  *
  */
 public class PetfinderUrlVisitor implements PetfinderVisitor {
+	private static final PetfinderUrlVisitor instance = new PetfinderUrlVisitor();
 	private static Logger logger = LogManager.getRootLogger();
 	private static Properties props = getProperties();
 	private static final String PET_FINDER_API_KEY = props.getProperty("petfinder.key");
@@ -26,8 +27,14 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 
 	private static final String TOKEN_URL = "https://api.petfinder.com/v2/oauth2/token";
 	private static final String PET_FINDER_API_ROOT = "https://api.petfinder.com/v2/";
+	
+	private static int randomNumberMax = 20;
 
-	private static boolean placeQuestionMark;
+	private PetfinderUrlVisitor() {}
+	
+	public static PetfinderUrlVisitor getInstance() {
+		return instance;
+	}
 
 	public String getAuth() {
 		return PET_FINDER_API_KEY + ":" + PET_FINDER_SECRET;
@@ -38,6 +45,7 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 		return new URL(str);
 	}
 
+	private static boolean placeQuestionMark;
 	@Override
 	public URL urlBuilder(String location, String status, int distance, int page) throws MalformedURLException {
 		placeQuestionMark = false;
@@ -93,9 +101,9 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 	private String buildPageString(int page) {
 		if (page > 0) {
 			if (placeQuestionMark) {
-				return "&" + getDistanceString(page);
+				return "&" + getPageString(randomNumber());
 			} else {
-				return "?" + getDistanceString(page);
+				return "?" + getPageString(randomNumber());
 			}
 		} else if(page < 0) {
 			return "";
@@ -106,6 +114,14 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 				return "?" + getPageString(1);
 			}
 		}
+	}
+	
+	private int randomNumber() {
+		return (int) (Math.random() * (PetfinderUrlVisitor.randomNumberMax - 1)) + 1;
+	}
+	
+	public void setRandomNumber(int randomNumberMax) {
+		PetfinderUrlVisitor.randomNumberMax = randomNumberMax;
 	}
 
 	public String getTokenString() {
