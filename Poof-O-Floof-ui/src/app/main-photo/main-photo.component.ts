@@ -16,8 +16,9 @@ export class MainPhotoComponent implements OnInit {
   private photoDisplayIndex = 0;
   private photoStreamIndex = 0;
   private mainFramePhotoUrl: string;
+  private mainFramePhotoType: string;
   private LARGE_URL_SUFFIX = '&width=600';
-  // private psCurrentState: PhotoStreamMetaData;
+  private psCurrentState: PhotoStreamMetaData;
 
   constructor(
     private photoUrlProvider: PhotoUrlProviderService,
@@ -26,6 +27,7 @@ export class MainPhotoComponent implements OnInit {
     // this.psCurrentState = new PhotoStreamMetaData();
     const photoStreamArraySize = this.photoUrlProvider.getMaxPhotoStreamSize();
     this.photoStreamIndexArray = [...Array(photoStreamArraySize).keys()];
+    this.setPhotoStreamCurrentState();
     // this.shuffle(this.photoStreamIndexArray);
   }
 
@@ -34,7 +36,7 @@ export class MainPhotoComponent implements OnInit {
     this.setPhotoStreamCurrentState();
     this.setMainFramePhotoUrl();
     // const photoStreamArraySize = this.psCurrentState.maxStreamSize;
-    // console.log(photoStreamArraySize);
+    console.log(this.photoStreamIndexArray);
   }
 
   addMorePhotos() {
@@ -56,6 +58,7 @@ export class MainPhotoComponent implements OnInit {
         data => {
           this.photoStreamIndex = this.photoStreamIndexArray[this.photoDisplayIndex];
           this.mainFramePhotoUrl = data[this.photoStreamIndex].fullUrl + this.LARGE_URL_SUFFIX;
+          this.mainFramePhotoType = data[this.photoStreamIndex].type;
         }
       );
   }
@@ -64,7 +67,7 @@ export class MainPhotoComponent implements OnInit {
     this.photoUrlProvider.getPhotoStreamCurrentState()
       .subscribe(
         data => {
-          // this.psCurrentState = data;
+          this.psCurrentState = data;
         }
       );
   }

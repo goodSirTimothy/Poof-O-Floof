@@ -7,7 +7,7 @@ import { LocationService } from '../services/location.service';
 @Injectable({ providedIn: 'root' })
 
 export class PhotoUrlProviderService {
-  private TEST_PHOTO_BUNDLE_URL = 'https://jsonplaceholder.typicode.com/photos?albumId=1';
+  // private TEST_PHOTO_BUNDLE_URL = 'https://jsonplaceholder.typicode.com/photos?albumId=1';
   private PHOTO_BUNDLE_URL = 'http://localhost:8080/Poof-O-Floof/api/location';
   private MAX_PHOTO_STREAM_SIZE = 500;
   private photoBundleSize: number;
@@ -34,12 +34,12 @@ export class PhotoUrlProviderService {
       .subscribe(
         data => {
           this.photoStreamCurrentState.lastPhotoBundleSize = Object.keys(data).length;
-          console.log('NewBundleSize:' + this.photoStreamCurrentState.lastPhotoBundleSize);
+          console.log('New Bundle Size:' + this.photoStreamCurrentState.lastPhotoBundleSize);
           this.photoStreamCurrentState$.next(this.photoStreamCurrentState);
           this.photoStream$.next(data);
         },
         error => {
-          console.log('user location is not ready.');
+          console.log('User location is not ready. Tomcat is mad.');
           // console.error(error.error);
         }
       );
