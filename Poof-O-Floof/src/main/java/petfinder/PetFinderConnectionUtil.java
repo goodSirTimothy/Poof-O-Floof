@@ -185,7 +185,7 @@ public class PetFinderConnectionUtil {
 								+ ",\"type\":" + animal.get("type")
 								+ ",\"fullUrl\":" + "\""+urlArray[0]+"="+urlArray[1]+"\"" + "}");
 						{	// logger information
-							logger.info("\n{"
+							logger.trace("\n{"
 										+ "\n\t\"id\":" + animal.get("id") 
 										+ ",\n\t\"photoId\":" + urlArray[1]
 										+ ",\"type\":" + animal.get("type")
