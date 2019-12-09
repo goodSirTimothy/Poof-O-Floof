@@ -13,7 +13,6 @@ export class PhotoUrlProviderService {
   private photoBundleSize: number;
   private userIpLocInfo: UserIpLocInfo;
 
-  // private photoStream$ = new ReplaySubject<TestPhotoJSON>(this.MAX_PHOTO_STREAM_SIZE);
   private photoStream$ = new ReplaySubject<AnimalPhotoJSON>(this.MAX_PHOTO_STREAM_SIZE);
   private photoStreamCurrentState = new PhotoStreamMetaData();
   private photoStreamCurrentState$ = new BehaviorSubject<PhotoStreamMetaData>(undefined);
@@ -23,45 +22,25 @@ export class PhotoUrlProviderService {
     private locService: LocationService
   ) {
     this.photoStreamCurrentState.maxStreamSize = this.MAX_PHOTO_STREAM_SIZE;
-    this.getUserIpLocInfo();
-    // this.requestANewPhotoBundle();
+    this.locService.getUserIpLocInfo();
   }
 
   getMaxPhotoStreamSize() {
     return this.MAX_PHOTO_STREAM_SIZE;
   }
 
-  // requestANewPhotoBundleTest() {
-  //   this.http.get<TestPhotoJSON>(this.TEST_PHOTO_BUNDLE_URL)
-  //     .subscribe(data => {
-  //       this.photoStreamCurrentState.lastPhotoBundleSize = Object.keys(data).length;
-  //       this.photoStreamCurrentState$.next(this.photoStreamCurrentState);
-  //       this.photoStream$.next(data);
-  //     });
-  // }
-
-  getUserIpLocInfo() {
-    this.locService.getUserIpLocInfo().subscribe(
-      (data) => {
-        this.userIpLocInfo = data;
-        console.log(data);
-      }
-    );
-  }
-
   requestANewPhotoBundle(ipLoc: UserIpLocInfo) {
-    console.log('inside requestANewPhotoBundle');
-    // console.log(this.userIpLocInfo);
     this.http.post<AnimalPhotoJSON>(this.PHOTO_BUNDLE_URL, JSON.stringify(ipLoc))
       .subscribe(
         data => {
           this.photoStreamCurrentState.lastPhotoBundleSize = Object.keys(data).length;
+          console.log('NewBundleSize:' + this.photoStreamCurrentState.lastPhotoBundleSize);
           this.photoStreamCurrentState$.next(this.photoStreamCurrentState);
           this.photoStream$.next(data);
-          console.log(data);
         },
         error => {
-          console.error(error.error);
+          console.log('user location is not ready.');
+          // console.error(error.error);
         }
       );
   }
@@ -79,6 +58,7 @@ export class PhotoUrlProviderService {
 export interface AnimalPhotoJSON {
   animalId: number;
   photoId: number;
+  type: string;
   fullUrl: string;
 }
 
