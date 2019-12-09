@@ -27,8 +27,8 @@ import visitor.pattern.PetfinderUrlVisitor;
 import model.Photo;
 
 /**
- * Request animals from Petfinder.com API. See
- * <code> https://www.petfinder.com/developers/v2/docs/ </code>
+ * Request animals from Petfinder.com API.
+ * @see <a href="https://www.petfinder.com/developers/v2/docs/">Petfinder Dev Docs</a>
  * 
  * 
  * @author Tim
@@ -94,12 +94,13 @@ public class PetFinderConnectionUtil {
 	/**
 	 * Get animals based on the location of the user.
 	 * @param location: city, state; latitude,longitude; or postal code.
-	 * @param radius:   in miles
+	 * @param distance:   in miles
 	 * @throws MalformedURLException
 	 */
-	public String requestAnimalsByLocation(String location, int radius) throws MalformedURLException {
-		URL apiUrl = petVisitor.makePetfinderURL(
-				petVisitor.getPetFinderAnimalsString() + petVisitor.getLocationString(location, radius));
+	public String requestAnimalsByLocation(String location, int distance) throws MalformedURLException {
+		URL apiUrl = petVisitor.urlBuilder(location, null, distance, 0);
+		//petVisitor.makePetfinderURL(
+		//		petVisitor.getPetFinderAnimalsString() + petVisitor.getLocationString(location, radius));
 		try {
 			HttpsURLConnection connection = (HttpsURLConnection) apiUrl.openConnection();
 			connection.setRequestProperty("Authorization", "Bearer " + currentToken);
