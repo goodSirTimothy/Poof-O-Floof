@@ -232,34 +232,34 @@ public class PetFinderConnectionUtil {
 	 * @param response
 	 * @return
 	 */
-	private List<Photo> parseAnimalInformationAsList(String response) {
-		JsonNode jsonNode = null;
-		ObjectMapper om = new ObjectMapper();
-		try {
-			jsonNode = om.readValue(response, JsonNode.class);
-		} catch (IOException e) {
-			logger.warn("IOException Message: {}", e.getMessage());
-			logger.warn("Stack Trace: ", e);
-		}
-		JsonNode animals = jsonNode.get("animals");
-		List<Photo> animalList = new ArrayList<Photo>();
-
-		for (JsonNode animal : animals) {
-			if (null != (animal.get("photos").get(0))) {
-				for (JsonNode photo : animal.get("photos")) {
-					String urlString = "" + photo.get("full");
-					String[] urlArray = urlString.split("=");
-					if (urlArray.length > 1) {
-						String photoId = urlArray[1];
-						animalList.add(new Photo("" + animal.get("id"), photoId.replace("\"", ""),
-								urlString.replace("\"", "")));
-					}
-				}
-			}
-		}
-		logger.info(animalList);
-		return animalList;
-	}
+//	private List<Photo> parseAnimalInformationAsList(String response) {
+//		JsonNode jsonNode = null;
+//		ObjectMapper om = new ObjectMapper();
+//		try {
+//			jsonNode = om.readValue(response, JsonNode.class);
+//		} catch (IOException e) {
+//			logger.warn("IOException Message: {}", e.getMessage());
+//			logger.warn("Stack Trace: ", e);
+//		}
+//		JsonNode animals = jsonNode.get("animals");
+//		List<Photo> animalList = new ArrayList<Photo>();
+//
+//		for (JsonNode animal : animals) {
+//			if (null != (animal.get("photos").get(0))) {
+//				for (JsonNode photo : animal.get("photos")) {
+//					String urlString = "" + photo.get("full");
+//					String[] urlArray = urlString.split("=");
+//					if (urlArray.length > 1) {
+//						String photoId = urlArray[1];
+//						animalList.add(new Photo("" + animal.get("id"), photoId.replace("\"", ""),
+//								urlString.replace("\"", "")));
+//					}
+//				}
+//			}
+//		}
+//		logger.info(animalList);
+//		return animalList;
+//	}
 
 	public String getCurrentToken() {
 		return currentToken;

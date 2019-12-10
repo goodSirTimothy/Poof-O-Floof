@@ -18,8 +18,8 @@ public class MainDriver {
 	
 	public static void main(String[] args) {
 		//testPetFinder();
-		//testSaveDao();
-		testGetFavoriteList();
+		testSaveDao();
+		//testGetFavoriteList();
 	}
 	
 	private static void testPetFinder() {
@@ -37,9 +37,9 @@ public class MainDriver {
 	}
 	
 	private static void testSaveDao() {
-		Photo p = new Photo("111", "111", "javadog.com");
+		Photo p = new Photo(113, 121, "javadog.com", "spider");
 		logger.trace(animalDao.savePhoto(p));
-		logger.trace(animalDao.saveFavorite(2, "111"));
+		logger.trace(animalDao.saveFavorite(2, 121));
 		
 	}
 }
