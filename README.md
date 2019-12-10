@@ -16,7 +16,7 @@
 
 //Getting list of photos:
 //URI: /Poof-O-Floof/api/favorite
-//Method: POST
+//Method: GET
 //Parameter: userId=2
 //can also write parameter in URI in the form /Poof-O-Floof/api/favorite?userId=2
 //Body: NONE!!!
