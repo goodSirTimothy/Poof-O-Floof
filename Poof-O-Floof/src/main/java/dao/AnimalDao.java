@@ -19,7 +19,7 @@ public interface AnimalDao {
 	
 	boolean savePhoto(Photo photo);
 	
-	boolean saveFavorite(int userId, String photoId);
+	boolean saveFavorite(int userId, int photoId);
 	
 	List<Photo> getFavoriteList(int userId);
 

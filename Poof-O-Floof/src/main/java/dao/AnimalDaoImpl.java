@@ -30,8 +30,8 @@ public class AnimalDaoImpl implements AnimalDao {
 			"VALUES (?, ?, ?, ?, ?, ?)";
 	
 	public static final String CHECK_PHOTO = "SELECT photo_id FROM photo WHERE photo_id = ?";
-	public static final String SAVE_PHOTO = "INSERT INTO photo (animal_id, photo_id, full_url) " +
-			"VALUES (?, ?, ?)";
+	public static final String SAVE_PHOTO = "INSERT INTO photo (animal_id, photo_id, full_url, type) " +
+			"VALUES (?, ?, ?, ?)";
 	public static final String SAVE_FAVORITE = "INSERT INTO favorite (favorite_id, user_id, photo_id) " +
 		    "VALUES (favorite_id_seq.nextval, ?, ?)";
 	
@@ -81,7 +81,7 @@ public class AnimalDaoImpl implements AnimalDao {
 			//check if photo is in database
 			PreparedStatement ps1 = conn.prepareStatement(CHECK_PHOTO);
 			int stIndex = 0;
-			ps1.setString(++stIndex, photo.getPhotoId());
+			ps1.setInt(++stIndex, photo.getPhotoId());
 			
 			ResultSet rs = ps1.executeQuery();
 			
@@ -93,9 +93,10 @@ public class AnimalDaoImpl implements AnimalDao {
 			else {
 				PreparedStatement ps2 = conn.prepareStatement(SAVE_PHOTO);
 				stIndex = 0;
-				ps2.setString(++stIndex, photo.getAnimalId());
-				ps2.setString(++stIndex, photo.getPhotoId());
+				ps2.setInt(++stIndex, photo.getAnimalId());
+				ps2.setInt(++stIndex, photo.getPhotoId());
 				ps2.setString(++stIndex, photo.getFullUrl());
+				ps2.setString(++stIndex, photo.getType());
 				
 				return ps2.executeUpdate() == 1;
 			}
@@ -107,14 +108,14 @@ public class AnimalDaoImpl implements AnimalDao {
 	}
 
 	@Override
-	public boolean saveFavorite(int userId, String photoId) {
+	public boolean saveFavorite(int userId, int photoId) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			//save favorite
 			PreparedStatement ps = conn.prepareStatement(SAVE_FAVORITE);
 			
 			int stIndex = 0;
 			ps.setInt(++stIndex, userId);
-			ps.setString(++stIndex, photoId);
+			ps.setInt(++stIndex, photoId);
 			
 			return ps.executeUpdate() == 1;
 		}
@@ -138,10 +139,11 @@ public class AnimalDaoImpl implements AnimalDao {
 			List<Photo> photoList = new ArrayList<Photo>();
 			
 			while(rs.next()) {
-				String animalId = rs.getString("animal_id");
-				String photoId = rs.getString("photo_id");
+				int animalId = rs.getInt("animal_id");
+				int photoId = rs.getInt("photo_id");
 				String fullUrl = rs.getString("full_url");
-				photoList.add(new Photo(animalId, photoId, fullUrl));
+				String type = rs.getString("type");
+				photoList.add(new Photo(animalId, photoId, fullUrl, type));
 			}
 			
 			return photoList;

@@ -18,11 +18,6 @@ import petfinder.PetFinderConnectionUtil;
  */
 public class MainDriver {
 	private static Logger logger = LogManager.getRootLogger();
-<<<<<<< HEAD
-	
-	public static void main(String[] args) {
-		//testPetFinder();
-=======
 	private static PetFinderConnectionUtil petFinderConnInst = PetFinderConnectionUtil.getInstance();
 	private static final AnimalDao animalDao = AnimalDaoImpl.getInstance();
 	
@@ -30,7 +25,6 @@ public class MainDriver {
 		//testPetFinder();
 		//testSaveDao();
 		testGetFavoriteList();
->>>>>>> 70eb80283e5bac4a88b5f9fa466d7749a0589e85
 	}
 	
 	private static void testPetFinder() {
@@ -49,9 +43,9 @@ public class MainDriver {
 	}
 	
 	private static void testSaveDao() {
-		Photo p = new Photo("111", "111", "javadog.com");
+		Photo p = new Photo(113, 121, "javadog.com", "spider");
 		logger.trace(animalDao.savePhoto(p));
-		logger.trace(animalDao.saveFavorite(2, "111"));
+		logger.trace(animalDao.saveFavorite(2, 121));
 		
 	}
 }

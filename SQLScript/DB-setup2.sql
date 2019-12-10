@@ -37,7 +37,8 @@ CREATE TABLE animal (
 CREATE TABLE photo (
     animal_id number,
     photo_id number PRIMARY KEY,
-    full_url varchar2(100)
+    full_url varchar2(100),
+    type varchar2(30)
 );
 
 -- favorite picture not animal, so we can re-get the information on that animal
@@ -83,17 +84,17 @@ INSERT INTO users (user_id, current_ip, current_ip_location, display_name, email
 INSERT INTO users (user_id, current_ip, current_ip_location, display_name, email, secure_key, salt)
     VALUES (user_id_seq.nextval, '?', '?', 'user', '?', '?', 'pass');
 
-INSERT INTO photo (animal_id, photo_id, full_url)
-    VALUES (666, 123, 'dogpicture1.com');
+INSERT INTO photo (animal_id, photo_id, full_url, type)
+    VALUES (666, 123, 'dogpicture1.com', 'dog');
 
-INSERT INTO photo (animal_id, photo_id, full_url)
-    VALUES (4522, 800, 'dogpicture2.com');
+INSERT INTO photo (animal_id, photo_id, full_url, type)
+    VALUES (4522, 800, 'dogpicture2.com', 'dog');
     
-INSERT INTO photo (animal_id, photo_id, full_url)
-    VALUES (473, 324, 'dogpicture3.com');
+INSERT INTO photo (animal_id, photo_id, full_url, type)
+    VALUES (473, 324, 'dogpicture3.com', 'dog');
     
-INSERT INTO photo (animal_id, photo_id, full_url)
-    VALUES (473, 325, 'dogpicture4.com');
+INSERT INTO photo (animal_id, photo_id, full_url, type)
+    VALUES (473, 325, 'dogpicture4.com', 'spider');
 
 INSERT INTO favorite (favorite_id, user_id, photo_id)
     VALUES (favorite_id_seq.nextval, 1, 123);
