@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -39,11 +39,10 @@ public class UserDaoImpl implements UserDao {
 			ResultSet rs = sqlVisitor.login(conn, loginCredentials).executeQuery();
 			
 			if(rs.next()) {
-				String displayName = loginCredentials.getUsername();
 				int userId = rs.getInt("user_id");
 				String currentIp = rs.getString("current_ip");
 				String currentIpLocation = rs.getString("current_ip_location");
-				
+				String displayName = loginCredentials.getUsername();
 				return new User(userId, currentIp, currentIpLocation, displayName);
 			}
 			else {
