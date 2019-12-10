@@ -9,6 +9,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import servlet.LocationDispatcher;
 
+/**
+ * 
+ * @author Tim
+ *
+ */
 public class Json {
 	
 	// For readability/maintainability
@@ -24,7 +29,11 @@ public class Json {
 	// Restrict Instantiation
 	private Json() {}
 	
-	
+	/**
+	 * Replace {@link ObjectMapper} <b>writeValueAsBytes</b> with just one one object
+	 * @param o = the <b>Object</b> being passed in
+	 * @return
+	 */
 	public static byte[] write(Object o) {
 		try {
 			return mapper.writeValueAsBytes(o);
@@ -34,6 +43,12 @@ public class Json {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param is
+	 * @param clazz
+	 * @return
+	 */
 	public static Object read(InputStream is, Class<?> clazz) {
 		try {
 			return mapper.readValue(is, clazz);
@@ -54,14 +69,6 @@ public class Json {
 			return mapper.readValue(str, JsonNode.class);
 		} catch (IOException e) {
 			Exceptions.logJsonUnmarshalException(e, clazz);
-			return null;
-		}
-	}
-	public static byte[] writeString(String str, Class<?> clazz) {
-		try {
-			return mapper.writeValueAsBytes(str);
-		} catch (IOException e) {
-			Exceptions.logJsonMarshalException(e, clazz);
 			return null;
 		}
 	}

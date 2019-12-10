@@ -8,15 +8,20 @@ import org.apache.logging.log4j.Logger;
 
 import petfinder.PetFinderConnectionUtil;
 
+/**
+ * 
+ * @author Tim
+ *
+ */
 public class MainDriver {
 	private static Logger logger = LogManager.getRootLogger();
-	private static PetFinderConnectionUtil petFinderConnInst = PetFinderConnectionUtil.getInstance();
 	
 	public static void main(String[] args) {
-		testPetFinder();
+		//testPetFinder();
 	}
 	
 	private static void testPetFinder() {
+		PetFinderConnectionUtil petFinderConnInst = PetFinderConnectionUtil.getInstance();
 		try {
 			petFinderConnInst.requestNewToken();
 		    logger.debug(petFinderConnInst.getCurrentToken());
