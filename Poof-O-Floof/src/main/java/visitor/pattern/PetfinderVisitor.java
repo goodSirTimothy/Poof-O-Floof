@@ -3,6 +3,11 @@ package visitor.pattern;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * 
+ * @author Tim
+ *
+ */
 public interface PetfinderVisitor {
 
 	/**
@@ -29,7 +34,7 @@ public interface PetfinderVisitor {
 	 * @return {@link URL}
 	 * @throws MalformedURLException
 	 */
-	public URL urlBuilder(String location, String status, int distance, int page) throws MalformedURLException;
+	public URL urlBuilder(String location, int distance, int page) throws MalformedURLException;
 
 	/**
 	 * 

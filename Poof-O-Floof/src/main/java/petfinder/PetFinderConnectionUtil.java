@@ -100,7 +100,7 @@ public class PetFinderConnectionUtil {
 	 * @throws MalformedURLException
 	 */
 	public String requestAnimalsByLocation(String location, int distance) throws MalformedURLException {
-		URL apiUrl = petVisitor.urlBuilder(location, "adoptable", distance, 1);
+		URL apiUrl = petVisitor.urlBuilder(location, distance, 1);
 		HttpsURLConnection connection = null;
 		try {
 			connection = (HttpsURLConnection) apiUrl.openConnection();
@@ -137,7 +137,7 @@ public class PetFinderConnectionUtil {
 	 * @throws MalformedURLException
 	 */
 	public String requestAnimals() throws MalformedURLException {
-		URL apiUrl = petVisitor.urlBuilder(null, null, -1, 1);
+		URL apiUrl = petVisitor.urlBuilder(null, -1, 1);
 		HttpsURLConnection connection = null;
 		try {
 			connection = (HttpsURLConnection) apiUrl.openConnection();
@@ -261,10 +261,18 @@ public class PetFinderConnectionUtil {
 //		return animalList;
 //	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public String getCurrentToken() {
 		return currentToken;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public static PetFinderConnectionUtil getInstance() {
 		return instance;
 	}
