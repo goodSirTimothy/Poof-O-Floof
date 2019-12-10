@@ -4,9 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import model.AnimalBasic;
 import model.AnimalFull;
+import model.Photo;
 import util.ConnectionUtil;
 import util.Exceptions;
 
@@ -23,21 +29,28 @@ public class AnimalDaoImpl implements AnimalDao {
 	public static final String SAVE_ANIMAL = "INSERT INTO animal (animal_id, animal_type, species, age, gender, animal_size) " + 
 			"VALUES (?, ?, ?, ?, ?, ?)";
 	
-	public static final String SAVE_FAVORITE = "INSERT INTO favorite (favorite_id, user_id, animal_id) " +
+	public static final String CHECK_PHOTO = "SELECT photo_id FROM photo WHERE photo_id = ?";
+	public static final String SAVE_PHOTO = "INSERT INTO photo (animal_id, photo_id, full_url) " +
+			"VALUES (?, ?, ?)";
+	public static final String SAVE_FAVORITE = "INSERT INTO favorite (favorite_id, user_id, photo_id) " +
 		    "VALUES (favorite_id_seq.nextval, ?, ?)";
 	
 	public static final String GET_DAILY_LIKES = "SELECT likes FROM daily_likes WHERE species = ?";
 	public static final String UPDATE_DAILY_LIKES = "UPDATE daily_likes SET likes = ? WHERE species = ?";
 	public static final String INSERT_DAILY_LIKES = "INSERT INTO daily_likes (daily_likes_id, species, likes, current_date) " +
 			"VALUES (daily_likes_id.next, ?, 1, CURRENT_TIMESTAMP)";
+	public static final String GET_FAVORITE_PHOTO_LIST = "SELECT * FROM favorite f INNER JOIN photo p "
+			+ "ON (f.photo_id = p.photo_id) WHERE user_id = ?";
+
+	private final Logger logger = LogManager.getLogger(getClass());
 	
-	//deprecated, probably broken
+	//unused
 	public boolean saveFullAnimal(AnimalFull animalFull) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
-	//deprecated, probably broken
+	//unused, probably broken
 	public boolean saveBasicAnimal(AnimalBasic animalBasic) {
 		try(Connection conn = ConnectionUtil.getConnection()){
 			String sql = SAVE_ANIMAL;
@@ -62,16 +75,30 @@ public class AnimalDaoImpl implements AnimalDao {
 	}
 	
 	@Override
-	public boolean saveFavoritePicture(int animalId, int userId) {
+	public boolean savePhoto(Photo photo) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			PreparedStatement ps = conn.prepareStatement(SAVE_FAVORITE);
-			
+			//save photo if photo is not already in database
+			//check if photo is in database
+			PreparedStatement ps1 = conn.prepareStatement(CHECK_PHOTO);
 			int stIndex = 0;
-			ps.setInt(++stIndex, userId);
-			ps.setInt(++stIndex, animalId);
+			ps1.setString(++stIndex, photo.getPhotoId());
 			
-			return ps.executeUpdate() == 1;
+			ResultSet rs = ps1.executeQuery();
 			
+			//if result set is empty, then add photo
+			if(rs.next()) {
+				logger.info("photo already in database");
+				return true;
+			}
+			else {
+				PreparedStatement ps2 = conn.prepareStatement(SAVE_PHOTO);
+				stIndex = 0;
+				ps2.setString(++stIndex, photo.getAnimalId());
+				ps2.setString(++stIndex, photo.getPhotoId());
+				ps2.setString(++stIndex, photo.getFullUrl());
+				
+				return ps2.executeUpdate() == 1;
+			}
 		}
 		catch(SQLException e) {
 			Exceptions.logSQLException(e);
@@ -79,6 +106,52 @@ public class AnimalDaoImpl implements AnimalDao {
 		}
 	}
 
+	@Override
+	public boolean saveFavorite(int userId, String photoId) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			//save favorite
+			PreparedStatement ps = conn.prepareStatement(SAVE_FAVORITE);
+			
+			int stIndex = 0;
+			ps.setInt(++stIndex, userId);
+			ps.setString(++stIndex, photoId);
+			
+			return ps.executeUpdate() == 1;
+		}
+		catch(SQLException e) {
+			Exceptions.logSQLException(e);
+			return false;
+		}
+	}
+
+	
+	@Override
+	public List<Photo> getFavoriteList(int userId) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			PreparedStatement ps = conn.prepareStatement(GET_FAVORITE_PHOTO_LIST);
+			
+			int stIndex = 0;
+			ps.setInt(++stIndex, userId);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			List<Photo> photoList = new ArrayList<Photo>();
+			
+			while(rs.next()) {
+				String animalId = rs.getString("animal_id");
+				String photoId = rs.getString("photo_id");
+				String fullUrl = rs.getString("full_url");
+				photoList.add(new Photo(animalId, photoId, fullUrl));
+			}
+			
+			return photoList;
+		}
+		catch(SQLException e) {
+			Exceptions.logSQLException(e);
+			return null;
+		}
+	}
+	
 	@Override
 	public boolean updateDailyLikes(AnimalBasic animalBasic) {
 		//check if species is already in table
@@ -125,6 +198,9 @@ public class AnimalDaoImpl implements AnimalDao {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
+
 
 
 
