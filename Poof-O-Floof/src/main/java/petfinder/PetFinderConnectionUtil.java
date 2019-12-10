@@ -49,6 +49,10 @@ public class PetFinderConnectionUtil {
 	private PetFinderConnectionUtil() {
 	}
 
+	/**
+	 * Request a new Token from the <strong>PetFinder API</strong>
+	 * @throws MalformedURLException
+	 */
 	public void requestNewToken() throws MalformedURLException {
 		URL tokenUrl = petVisitor.getTokenURL();
 		String content = "grant_type=client_credentials";
@@ -184,7 +188,8 @@ public class PetFinderConnectionUtil {
         	"photoId": 1575856900,
         	"type": "Dog",
         	"fullUrl": https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46794611/4/?bust=1575856900
-    	}]</code>
+    	}]
+    	</code>
 	 */
 	private StringBuilder parseOutAnimalInformation(String response) {
 		JsonNode jsonNode = Json.readString(response, PetFinderConnectionUtil.class);
