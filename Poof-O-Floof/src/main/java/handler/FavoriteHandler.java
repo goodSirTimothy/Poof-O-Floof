@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import dao.AnimalDao;
 import dao.AnimalDaoImpl;
 import model.Photo;
+import model.ServerFavPhotos;
 import util.Exceptions;
 import util.Json;
 
@@ -39,7 +40,7 @@ public class FavoriteHandler {
 		// get user id
 		int userId = Integer.parseInt(req.getParameter("userId"));
 		// get photos from database
-		List<Photo> favList = animalDao.getFavoriteList(userId);
+		List<ServerFavPhotos> favList = animalDao.getFavoriteList(userId);
 		// say so if empty
 		if (favList.isEmpty()) {
 			resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -47,6 +48,7 @@ public class FavoriteHandler {
 		} else {
 			try {
 				// write list
+				resp.setHeader("Content-type", "application/json");
 				resp.getOutputStream().write(Json.write(favList));
 				return;
 			} catch (IOException e) {

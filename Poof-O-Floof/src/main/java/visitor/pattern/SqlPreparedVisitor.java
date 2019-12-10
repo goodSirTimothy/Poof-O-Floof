@@ -13,8 +13,7 @@ import model.UserLogin;
 public class SqlPreparedVisitor implements SqlVisitor{
 	private static SqlPreparedVisitor instance = new SqlPreparedVisitor();
 
-	private SqlPreparedVisitor() {
-	}
+	private SqlPreparedVisitor() {}
 
 	public static SqlPreparedVisitor getInstance() {
 		return instance;

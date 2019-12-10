@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.AnimalBasic;
 import model.Photo;
+import model.ServerFavPhotos;
 
 public interface AnimalDao {
 
@@ -39,7 +40,7 @@ public interface AnimalDao {
 	 * @param userId = the {@link model.User}'s ID wanting to view saved photos
 	 * @return
 	 */
-	List<Photo> getFavoriteList(int userId);
+	List<ServerFavPhotos> getFavoriteList(int userId);
 
 	/**
 	 * @deprecated
