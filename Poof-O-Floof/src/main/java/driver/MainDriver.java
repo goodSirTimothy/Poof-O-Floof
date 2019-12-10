@@ -22,9 +22,9 @@ public class MainDriver {
 	private static final AnimalDao animalDao = AnimalDaoImpl.getInstance();
 	
 	public static void main(String[] args) {
-		// testPetFinder();
-		// testSaveDao();
-		// testGetFavoriteList();
+		//testPetFinder();
+		//testSaveDao();
+		testGetFavoriteList();
 	}
 	
 	private static void testPetFinder() {
@@ -39,13 +39,13 @@ public class MainDriver {
 	}
 	
 	private static void testGetFavoriteList() {
-		logger.trace(animalDao.getFavoriteList(525252));
+		logger.trace(animalDao.getFavoriteList(1));
 	}
 	
 	private static void testSaveDao() {
-		Photo p = new Photo(113, 121,  "spider", "javadog.com/picture.png", "javadog.com");
-		logger.trace(animalDao.savePhoto(525252, p));
-		//logger.trace(animalDao.saveFavorite(2, 121));
+		Photo p = new Photo(113, 121, "javadog.com", "spider");
+		logger.trace(animalDao.savePhoto(p));
+		logger.trace(animalDao.saveFavorite(2, 121));
 		
 	}
 }
