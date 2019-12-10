@@ -5,27 +5,23 @@
 <br />
 
 <div>
+  <!-- <h3>lastPhotoBundleSize: {{this.psCurrentState.lastPhotoBundleSize}}</h3> -->
   <h3>photoDisplayIndex: {{photoDisplayIndex}}</h3>
+
   <h3>photoStreamIndex: {{photoStreamIndex}}</h3>
   <h3>mainFramePhotoUrl: {{mainFramePhotoUrl}}</h3>
+  <h3>type: {{mainFramePhotoType}}</h3>
   <img src="{{mainFramePhotoUrl}}">
 </div>
 
-<button (click)="getNewPhotoUrl()">
-  Get A New Photo
+<br />
+<button (click)="addToFavorites()">
+    Favorite Photo
 </button>
 <br />
-<br />
-
-<div>
-    <img src="{{photoUrl}}">
-  </div> -->
 
 <div class="text-center">
   <div class="col-sm-8 offset-sm-2">
     <a routerLink="/social-media" class="btn btn-link">Share</a>
   </div>
 </div>
-
-<br />
-<br />

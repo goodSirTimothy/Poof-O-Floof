@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private locService: LocationService
-  ) { }
+  ) { this.locService.getUserIpLocInfo(); }
 
   ngOnInit(): void { this.getUserIpLocInfo(); }
 

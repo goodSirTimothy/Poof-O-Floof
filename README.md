@@ -1,4 +1,12 @@
 # Poof-O-Floof
+## 2019/12/08
+* The app has barebone functionality: POST ip-location to server, and display the animal photos
+* Things that need to be done before presentation:
+  * User Login/View Favorite: Boris
+  * App routing/Nav Bar/Social media sharing: Gabby
+  * Fix the location Service/Photo Randomization: Hao
+  * User Favorite/Like Statistics or graph: Tim
+
 ## 2019/12/04 Hope to finish basic functionalities by Friday
 * Stage one basic function: client-side POST a ip-location JSON to Java server, and get a big JSON bundling multiple animal photos of all sizes 
 * Just use the coords for animal query. Store other location data later.
@@ -18,34 +26,40 @@
 //BundleOfAnimalPhotos
 [
   {
-    "animalId": "46731997",
-    "photoId": "1575302300",
-    "fullUrl": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46731997/1/?bust=1575302300"
+    "animalId":46731997,
+    "photoId":1575302300,
+    "type":"dog",
+    "fullUrl":"https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46731997/1/?bust=1575302300"
   },
   {
-    "animalId": "46747816",
-    "photoId": "1575420521",
-    "fullUrl": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46747816/2/?bust=1575420522"
+    "animalId":46747816,
+    "photoId":1575420521,
+    "type":"dog",
+    "fullUrl":"https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46747816/2/?bust=1575420522"
   },
   {
-    "animalId": "46747816",
-    "photoId": "1575420521",
-    "fullUrl": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46747816/2/?bust=1575420522"
+    "animalId":46747816,
+    "photoId":1575420521,
+    "type":"dog",
+    "fullUrl":"https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46747816/2/?bust=1575420522"
   },
   {
-    "animalId": "46709502",
-    "photoId": "1574968530",
-    "fullUrl": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46709502/1/?bust=1574968530"
+    "animalId":46709502,
+    "photoId":1574968530,
+    "type":"dog",
+    "fullUrl":"https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46709502/1/?bust=1574968530"
   },
   {
-    "animalId": "46709502",
-    "photoId": "1574968535",
-    "fullUrl": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46709502/2/?bust=1574968535"
+    "animalId":46709502,
+    "photoId":1574968535,
+    "type":"dog",
+    "fullUrl":"https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46709502/2/?bust=1574968535"
   },
   {
-    "animalId": "46709502",
-    "photoId": "1574968541",
-    "fullUrl": "https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46709502/3/?bust=1574968541"
+    "animalId":46709502,
+    "photoId":1574968541,
+    "type":"dog",
+    "fullUrl":"https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46709502/3/?bust=1574968541"
   }
 ]
 ```
