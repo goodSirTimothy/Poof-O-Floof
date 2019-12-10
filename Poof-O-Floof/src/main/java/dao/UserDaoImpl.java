@@ -16,6 +16,14 @@ import util.Exceptions;
 
 public class UserDaoImpl implements UserDao {
 
+	private static final UserDao instance = new UserDaoImpl();
+	
+	private UserDaoImpl() {}
+	
+	public static UserDao getInstance() {
+		return instance;
+	}
+	
 	private final Logger logger = LogManager.getLogger(getClass());
 	
 	public static final String CHECK_LOGIN = "SELECT * FROM users WHERE display_name = ? AND salt = ?";

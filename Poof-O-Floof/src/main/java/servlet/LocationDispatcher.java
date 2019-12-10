@@ -32,19 +32,20 @@ public class LocationDispatcher implements Dispatcher {
 		//take in json object instead of string - done
 		//write list of animals in way thats easier to work with
 		//pagination or something
+		//add http status codes
 		try {
-			logger.info("does this work?????");
+			logger.trace("does this work?????");
 			//get coordinates
 			LocationRequest locReq = (LocationRequest) Json.read(request.getInputStream(), LocationRequest.class);
 			String location = locReq.getCoords();
-			logger.info("location is: " + location);
+			logger.trace("location is: " + location);
 			
 			//put coordinates into thing
 			try {
 				PetFinderConnectionUtil pfcu = PetFinderConnectionUtil.getInstance();
 				pfcu.requestNewToken();
 				List<Photo> animalList = pfcu.requestAnimalsByLocation(location, RADIUS);
-				logger.info("bless this mess \n" + animalList);
+				logger.trace("bless this mess \n" + animalList);
 				
 				//pass only photos to front end
 				response.getOutputStream().write(Json.write(animalList));
