@@ -26,14 +26,9 @@ public class FavoriteHandler {
 			//get photo from json
 			Photo photo = (Photo) Json.read(req.getInputStream(), Photo.class);
 			//put photo in dao
-			animalDao.savePhoto(photo);
-			
-			//get user id from front end and put in database
 			int userId = Integer.parseInt(req.getParameter("userId"));
 			logger.trace(userId);
-			animalDao.saveFavorite(userId, photo.getPhotoId());
-			
-			
+			animalDao.savePhoto(userId, photo);
 		}
 		catch(IOException e) {
 			Exceptions.logJsonUnmarshalException(e, FavoriteHandler.class);
