@@ -1,56 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, ReplaySubject, AsyncSubject } from 'rxjs';
-import { UserIpLocInfo, PhotoStreamMetaData } from '../services/models.service';
-import { LocationService } from '../services/location.service';
 
 @Injectable({ providedIn: 'root' })
 
 export class FavPhotoUrlProviderService {
   private PHOTO_BUNDLE_URL = 'http://localhost:8080/Poof-O-Floof/api/location';
-  private MAX_FAV_PHOTO_STREAM_SIZE = 100;
-  private photoBundleSize: number;
-  private userIpLocInfo: UserIpLocInfo;
-  private photoStream$ = new ReplaySubject<AnimalPhotoJSON>(this.MAX_FAV_PHOTO_STREAM_SIZE);
-  private photoStreamCurrentState = new PhotoStreamMetaData();
-  private photoStreamCurrentState$ = new BehaviorSubject<PhotoStreamMetaData>(undefined);
 
   constructor(
-    private http: HttpClient,
-    private locService: LocationService
   ) {
-    this.photoStreamCurrentState.maxStreamSize = this.MAX_FAV_PHOTO_STREAM_SIZE;
-    this.locService.getUserIpLocInfo();
    }
-
-   getMaxFavPhotoStreamSize() {
-    return this.MAX_FAV_PHOTO_STREAM_SIZE;
-  }
-
-  requestANewPhotoBundle(ipLoc: UserIpLocInfo) {
-    console.log('inside requestANewPhotoBundle');
-    // console.log(this.userIpLocInfo);
-    this.http.post<AnimalPhotoJSON>(this.PHOTO_BUNDLE_URL, JSON.stringify(ipLoc))
-      .subscribe(
-        data => {
-          this.photoStreamCurrentState.lastPhotoBundleSize = Object.keys(data).length;
-          this.photoStreamCurrentState$.next(this.photoStreamCurrentState);
-          this.photoStream$.next(data);
-          console.log(data);
-        },
-        error => {
-          console.error(error.error);
-        }
-      );
-  }
-
-  getPhotoStream() {
-    return this.photoStream$.asObservable();
-  }
-
-  getPhotoStreamCurrentState() {
-    return this.photoStreamCurrentState$.asObservable();
-  }
 }
 
 export interface AnimalPhotoJSON {
