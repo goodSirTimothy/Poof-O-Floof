@@ -16,43 +16,40 @@ import util.Exceptions;
 import util.Json;
 
 public class FavoriteHandler {
-	
+
 	private static final AnimalDao animalDao = AnimalDaoImpl.getInstance();
 	private static final Logger logger = LogManager.getLogger();
 
 	public static void handleSaveFavorite(HttpServletRequest req, HttpServletResponse resp) {
 		try {
 			logger.trace("here doggy");
-			//get photo from json
+			// get photo from json
 			Photo photo = (Photo) Json.read(req.getInputStream(), Photo.class);
-			//put photo in dao
+			// put photo in dao
 			int userId = Integer.parseInt(req.getParameter("userId"));
 			logger.trace(userId);
 			animalDao.savePhoto(userId, photo);
-		}
-		catch(IOException e) {
+		} catch (IOException e) {
 			Exceptions.logJsonUnmarshalException(e, FavoriteHandler.class);
 			return;
 		}
 	}
-	
+
 	public static void handleGetFavorites(HttpServletRequest req, HttpServletResponse resp) {
-		//get user id
+		// get user id
 		int userId = Integer.parseInt(req.getParameter("userId"));
-		//get photos from database
+		// get photos from database
 		List<Photo> favList = animalDao.getFavoriteList(userId);
-		//say so if empty
+		// say so if empty
 		if (favList.isEmpty()) {
 			resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 			return;
-		} 
-		else {
+		} else {
 			try {
-				//write list
+				// write list
 				resp.getOutputStream().write(Json.write(favList));
 				return;
-			}
-			catch(IOException e) {
+			} catch (IOException e) {
 				Exceptions.logJsonMarshalException(e, FavoriteHandler.class);
 				return;
 			}

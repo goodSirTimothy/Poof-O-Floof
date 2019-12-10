@@ -9,14 +9,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Using the visitor design pattern to replace the need of magic strings within
- * {@link petfinder.PetFinderConnectionUtil} and to create {@link URL}s.
+ * Implementation of {@link visitor.pattern.PetfinderVisitor}
  * 
  * @author Tim
- * 
- * @see <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Wikipedia</a>
- * @see <a href="https://blog.jooq.org/tag/design-pattern/">design-pattern</a>
- *
  */
 public class PetfinderUrlVisitor implements PetfinderVisitor {
 	private static final PetfinderUrlVisitor instance = new PetfinderUrlVisitor();
