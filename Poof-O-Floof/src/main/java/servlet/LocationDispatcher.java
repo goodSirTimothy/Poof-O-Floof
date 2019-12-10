@@ -13,6 +13,11 @@ import model.LocationRequest;
 import petfinder.PetFinderConnectionUtil;
 import util.Json;
 
+/**
+ * 
+ * @author Tim
+ *
+ */
 public class LocationDispatcher implements Dispatcher {
 	private static final Logger logger = LogManager.getLogger();
 	private static PetFinderConnectionUtil pfcu = PetFinderConnectionUtil.getInstance();

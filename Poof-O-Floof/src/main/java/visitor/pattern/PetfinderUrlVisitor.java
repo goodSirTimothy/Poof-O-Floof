@@ -27,11 +27,12 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 
 	private static final String TOKEN_URL = "https://api.petfinder.com/v2/oauth2/token";
 	private static final String PET_FINDER_API_ROOT = "https://api.petfinder.com/v2/";
-	
+
 	private static int randomNumberMax = 20;
 
-	private PetfinderUrlVisitor() {}
-	
+	private PetfinderUrlVisitor() {
+	}
+
 	public static PetfinderUrlVisitor getInstance() {
 		return instance;
 	}
@@ -39,28 +40,18 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 	public String getAuth() {
 		return PET_FINDER_API_KEY + ":" + PET_FINDER_SECRET;
 	}
-	
+
 	@Override
 	public URL makePetfinderURL(String str) throws MalformedURLException {
 		return new URL(str);
 	}
 
-	private static boolean placeQuestionMark;
 	@Override
-	public URL urlBuilder(String location, String status, int distance, int page) throws MalformedURLException {
-		placeQuestionMark = false;
+	public URL urlBuilder(String location, int distance, int page) throws MalformedURLException {
 		StringBuilder sb = new StringBuilder(getPetFinderAnimalsString());
+		sb.append("?status=adoptable");
 		if (location != null && !"".equals(location)) {
-			placeQuestionMark = true;
-			sb.append("?" + getLocationString(location));
-		}
-		if (status != null && !"".equals(status)) {
-			if (placeQuestionMark) {
-				sb.append("&" + getStatusString(status));
-			} else {
-				placeQuestionMark = true;
-				sb.append("?" + getStatusString(status));
-			}
+			sb.append("&" + getLocationString(location));
 		}
 		sb.append(buildDistanceString(distance));
 		sb.append(buildPageString(page));
@@ -70,56 +61,40 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 
 	/**
 	 * Build the string for the Distance part of the URL
+	 * 
 	 * @param distance
 	 * @return
 	 */
 	private String buildDistanceString(int distance) {
-		if(distance < 0) {
+		if (distance < 0) {
 			return "";
 		} else if (distance > 0) {
-			if (placeQuestionMark) {
-				return "&" + getDistanceString(distance);
-			} else {
-				placeQuestionMark = true;
-				return "?" + getDistanceString(distance);
-			}
+			return "&" + getDistanceString(distance);
 		} else {
-			if (placeQuestionMark) {
-				return "&" + getDistanceString(10);
-			} else {
-				placeQuestionMark = true;
-				return "?" + getDistanceString(10);
-			}
+			return "&" + getDistanceString(10);
 		}
 	}
-	
+
 	/**
 	 * Build the string for the Page part of the URL
+	 * 
 	 * @param page
 	 * @return
 	 */
 	private String buildPageString(int page) {
 		if (page > 0) {
-			if (placeQuestionMark) {
-				return "&" + getPageString(randomNumber());
-			} else {
-				return "?" + getPageString(randomNumber());
-			}
-		} else if(page < 0) {
+			return "&" + getPageString(randomNumber());
+		} else if (page < 0) {
 			return "";
 		} else {
-			if (placeQuestionMark) {
-				return "&" + getPageString(1);
-			} else {
-				return "?" + getPageString(1);
-			}
+			return "&" + getPageString(1);
 		}
 	}
-	
+
 	private int randomNumber() {
 		return (int) (Math.random() * (PetfinderUrlVisitor.randomNumberMax - 1)) + 1;
 	}
-	
+
 	public void setRandomNumber(int randomNumberMax) {
 		logger.debug("randomNumberMax = {}", randomNumberMax);
 		PetfinderUrlVisitor.randomNumberMax = randomNumberMax;
@@ -147,12 +122,17 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 		return PET_FINDER_API_ROOT + "animals";
 	}
 
-	private String getLocationString(String location) {
-		return String.format("location=%s", location);
-	}
-
+	/**
+	 * @deprecated
+	 * @param status
+	 * @return
+	 */
 	private String getStatusString(String status) {
 		return String.format("status=%s", status);
+	}
+
+	private String getLocationString(String location) {
+		return String.format("location=%s", location);
 	}
 
 	private String getDistanceString(int distance) {
