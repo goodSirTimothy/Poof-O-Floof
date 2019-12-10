@@ -26,6 +26,7 @@ public class LocationDispatcher implements Dispatcher {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
+
 		try {
 			// get the token
 			pfcu.requestNewToken();

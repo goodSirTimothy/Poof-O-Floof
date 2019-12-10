@@ -1,6 +1,9 @@
 package dao;
 
+import java.util.List;
+
 import model.AnimalBasic;
+import model.Photo;
 
 public interface AnimalDao {
 
@@ -13,7 +16,12 @@ public interface AnimalDao {
 	 * @param userId = the user that wanted to save 
 	 * @return
 	 */
-	boolean saveFavoritePicture(int animalId, int userId);
+	
+	boolean savePhoto(Photo photo);
+	
+	boolean saveFavorite(int userId, String photoId);
+	
+	List<Photo> getFavoriteList(int userId);
 
 	/************************************************
 	 * 					Update Logic				*
