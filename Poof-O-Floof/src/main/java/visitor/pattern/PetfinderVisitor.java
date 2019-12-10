@@ -4,8 +4,13 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
+ * Using the visitor design pattern to replace the need of magic strings within
+ * {@link petfinder.PetFinderConnectionUtil} and to create {@link URL}s.
  * 
  * @author Tim
+ * 
+ * @see <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Wikipedia</a>
+ * @see <a href="https://blog.jooq.org/tag/design-pattern/">design-pattern</a>
  *
  */
 public interface PetfinderVisitor {

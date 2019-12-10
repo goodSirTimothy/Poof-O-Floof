@@ -15,10 +15,10 @@ import model.AnimalFull;
 import model.Photo;
 import util.ConnectionUtil;
 import util.Exceptions;
-import visitor.pattern.SqlVisitor;
+import visitor.pattern.SqlPreparedVisitor;
 
 public class AnimalDaoImpl implements AnimalDao {
-	private static SqlVisitor sqlVisitor = SqlVisitor.getInstance();
+	private static SqlPreparedVisitor sqlVisitor = SqlPreparedVisitor.getInstance();
 
 	private static final AnimalDao instance = new AnimalDaoImpl();
 
