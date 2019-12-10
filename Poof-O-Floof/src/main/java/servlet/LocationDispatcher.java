@@ -35,7 +35,7 @@ public class LocationDispatcher implements Dispatcher {
 		try {
 			// get the token
 			pfcu.requestNewToken();
-			
+
 			// get coordinates
 			LocationRequest locReq = (LocationRequest) Json.read(request.getInputStream(), LocationRequest.class);
 			// if location object is not null
