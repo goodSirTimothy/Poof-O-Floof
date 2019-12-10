@@ -65,11 +65,11 @@ INSERT INTO users (user_id, current_ip, current_ip_location, display_name, email
 --INSERT INTO users (user_id, current_ip, current_ip_location, display_name, email, secure_key, salt)
 --    VALUES(user_id_seq.nextval, ?, ?, ?, ?, ?, ?);
 
-INSERT INTO photo (id, photo_id, animal_id, user_id, animal_type, full_url, adoption_url)
+INSERT INTO photo (id, photo_id, animal_id, user_id, animal_type, full_url, url)
     VALUES (photo_id_seq.nextval, 1575981498, 46806223, 525252, 'cat', 'https://dl5zpyw5k3jeb.cloudfront.net/photos/pets/46806223/1/?bust=1575981498', 'https://www.petfinder.com/cat/gizmo-46806223/mi/eaton-rapids/saved-by-zade-mi1028/?referrer_id=2279119b-62bc-4991-8fc5-ff96fb42cad6');
 
 -- Insert a photo
---INSERT INTO photo (id, photo_id, animal_id, animal_type, full_url, adoption_url)
+--INSERT INTO photo (id, photo_id, animal_id, animal_type, full_url, url)
 --    VALUES (photo_id_seq.nextval, ?, ?, ?, ?, ?);
 
 -- SELECT * FROM photo WHERE user_id = 525252;
