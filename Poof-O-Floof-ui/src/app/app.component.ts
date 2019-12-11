@@ -19,9 +19,7 @@ export class AppComponent implements OnInit {
  // galleryImages: NgxGalleryImage[];
 
   constructor(
-    // private http: HttpClient,
     private locService: LocationService,
-    // private photoUrlProvider: PhotoUrlProviderService
   ) { this.subPhotoUrlProvider(); }
 
   ngOnInit(): void { this.subPhotoUrlProvider(); }
