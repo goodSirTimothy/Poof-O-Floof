@@ -41,10 +41,10 @@ public class UserDaoImpl implements UserDao {
 			if(rs.next()) {
 				String displayName = loginCredentials.getUsername();
 				int userId = rs.getInt("user_id");
-				String currentIp = rs.getString("current_ip");
-				String currentIpLocation = rs.getString("current_ip_location");
+				String key = rs.getString("secure_key");
+				String salt = rs.getString("salt");
 				
-				return new User(userId, currentIp, currentIpLocation, displayName);
+				return new User(userId, displayName, key, salt);
 			}
 			else {
 				logger.warn("User with credentials: " + loginCredentials + " not found");
@@ -57,16 +57,41 @@ public class UserDaoImpl implements UserDao {
 		}
 	}
 
-	//ask where to get secure key
 	@Override
-	public boolean createUser(UserCreation userCreation) {
+	public User findByUsername(String username) {
 		try(Connection conn = ConnectionUtil.getConnection()){
-			return sqlVisitor.saveUsers(conn, userCreation).executeUpdate() == 1;
+			ResultSet rs = sqlVisitor.selectUserByUsername(conn, username).executeQuery();
+			
+			if(rs.next()) {
+				String displayName = username;
+				int userId = rs.getInt("user_id");
+				String key = rs.getString("secure_key");
+				String salt = rs.getString("salt");
+				
+				return new User(userId, displayName, key, salt);
+			}
+			else {
+				logger.warn("User with username: " + username + " not found");
+				return null;
+			}
+		}
+		catch(SQLException e) {
+			Exceptions.logSQLException(e);
+			return null;
+		}
+	}
+	
+	@Override
+	public boolean createUser(User user) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			return sqlVisitor.saveUsers(conn, user).executeUpdate() == 1;
 		}
 		catch(SQLException e) {
 			Exceptions.logSQLException(e);
 			return false;
 		}
 	}
+
+
 
 }
