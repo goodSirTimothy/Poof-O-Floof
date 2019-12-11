@@ -14,15 +14,14 @@ public class FavoriteDispatcher implements Dispatcher {
 
 	@Override
 	public void execute(HttpServletRequest req, HttpServletResponse resp) {
-		if(isSaveFavorite(req)) {
+		if (isSaveFavorite(req)) {
 			FavoriteHandler.handleSaveFavorite(req, resp);
-		}
-		else if(isGetFavorites(req)) {
+		} else if (isGetFavorites(req)) {
 			FavoriteHandler.handleGetFavorites(req, resp);
 		}
-		
+
 	}
-	
+
 	private boolean isSaveFavorite(HttpServletRequest req) {
 		return req.getMethod().equals("POST") && req.getRequestURI().equals("/Poof-O-Floof/api/favorite");
 	}

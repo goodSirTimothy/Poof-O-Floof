@@ -9,14 +9,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Using the visitor design pattern to replace the need of magic strings within
- * {@link petfinder.PetFinderConnectionUtil} and to create {@link URL}s.
+ * Implementation of {@link visitor.pattern.PetfinderVisitor}
  * 
  * @author Tim
- * 
- * @see <a href="https://en.wikipedia.org/wiki/Visitor_pattern">Wikipedia</a>
- * @see <a href="https://blog.jooq.org/tag/design-pattern/">design-pattern</a>
- *
  */
 public class PetfinderUrlVisitor implements PetfinderVisitor {
 	private static final PetfinderUrlVisitor instance = new PetfinderUrlVisitor();
@@ -30,13 +25,17 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 
 	private static int randomNumberMax = 20;
 
-	private PetfinderUrlVisitor() {
-	}
+	private PetfinderUrlVisitor() {}
 
 	public static PetfinderUrlVisitor getInstance() {
 		return instance;
 	}
 
+	/**
+	 * Returns the <a href="petfinder.com">PetFinder.com</a> API key.
+	 * 
+	 * @return {@link String}
+	 */
 	public String getAuth() {
 		return PET_FINDER_API_KEY + ":" + PET_FINDER_SECRET;
 	}
@@ -63,7 +62,7 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 	 * Build the string for the Distance part of the URL
 	 * 
 	 * @param distance
-	 * @return
+	 * @return {@link String}
 	 */
 	private String buildDistanceString(int distance) {
 		if (distance < 0) {
@@ -79,7 +78,7 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 	 * Build the string for the Page part of the URL
 	 * 
 	 * @param page
-	 * @return
+	 * @return {@link String}
 	 */
 	private String buildPageString(int page) {
 		if (page > 0) {
@@ -91,17 +90,21 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 		}
 	}
 
+	/**
+	 * generate a random number between 1 and <b>randomNumberMax</b>
+	 * @return
+	 */
 	private int randomNumber() {
 		return (int) (Math.random() * (PetfinderUrlVisitor.randomNumberMax - 1)) + 1;
 	}
 
+	/**
+	 * Set the random number for <b>randomNumberMax</b>
+	 * @param randomNumberMax
+	 */
 	public void setRandomNumber(int randomNumberMax) {
 		logger.debug("randomNumberMax = {}", randomNumberMax);
 		PetfinderUrlVisitor.randomNumberMax = randomNumberMax;
-	}
-
-	public String getTokenString() {
-		return TOKEN_URL;
 	}
 
 	@Override
@@ -109,6 +112,10 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 		return new URL(TOKEN_URL);
 	}
 
+	/**
+	 * The url for petfinder: <b>https://api.petfinder.com/v2</b>
+	 * @return
+	 */
 	public String getPetFinderApiRootString() {
 		return PET_FINDER_API_ROOT;
 	}
@@ -118,27 +125,53 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 		return new URL(PET_FINDER_API_ROOT);
 	}
 
+	/**
+	 * The url for petfinder: <b>https://api.petfinder.com/v2/animals</b>
+	 * 
+	 * @return {@link String}
+	 */
 	public String getPetFinderAnimalsString() {
 		return PET_FINDER_API_ROOT + "animals";
 	}
 
 	/**
-	 * @deprecated
+	 * get web page formatting for creating {@link URL}
+	 * 
+	 * @deprecated if being used, use it with <strong>makePetfinderURL</strong>
 	 * @param status
-	 * @return
+	 * @return {@link String}
 	 */
+	@SuppressWarnings("unused")
 	private String getStatusString(String status) {
 		return String.format("status=%s", status);
 	}
 
+	/**
+	 * get location formatting for creating {@link URL}
+	 * 
+	 * @param location
+	 * @return {@link String}
+	 */
 	private String getLocationString(String location) {
 		return String.format("location=%s", location);
 	}
 
+	/**
+	 * get distance formatting for creating {@link URL}
+	 * 
+	 * @param distance
+	 * @return {@link String}
+	 */
 	private String getDistanceString(int distance) {
 		return String.format("distance=%d", distance);
 	}
 
+	/**
+	 * get web page formatting for creating {@link URL}
+	 * 
+	 * @param page
+	 * @return {@link String}
+	 */
 	private String getPageString(int page) {
 		return String.format("page=%d", page);
 	}
@@ -146,7 +179,7 @@ public class PetfinderUrlVisitor implements PetfinderVisitor {
 	/**
 	 * load properties from {@link application.properties}
 	 * 
-	 * @return
+	 * @return {@link Properties}
 	 */
 	private static Properties getProperties() {
 		try {

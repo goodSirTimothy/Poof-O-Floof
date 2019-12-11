@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PhotoUrlProviderService, TestPhotoJSON } from '../services/photo-url-provider.service';
-// import { FavPhotoUrlProviderService } from '../services/fav-photo-url-provider.service';
+import { FavPhotoUrlProviderService } from '../services/fav-photo-url-provider.service';
 import { PhotoStreamMetaData, UserIpLocInfo } from '../services/models.service';
 import { ReplaySubject, BehaviorSubject } from 'rxjs';
 import { ConditionalExpr } from '@angular/compiler';
@@ -21,9 +21,15 @@ export class MainPhotoComponent implements OnInit {
   private LARGE_URL_SUFFIX = '&width=600';
   psCurrentState: PhotoStreamMetaData;
 
+  /* favPhotoStreamIndexArray: Array<number>;
+  favPhotoDisplayIndex = 0;
+  favPhotoStreamIndex = 0;
+  favFramePhotoUrl: string; */
+
   constructor(
     private locService: LocationService,
     private photoUrlProvider: PhotoUrlProviderService,
+    private favPhotoUrlProvider: FavPhotoUrlProviderService,
   ) {
     this.psCurrentState = new PhotoStreamMetaData();
     const psArraySize = this.photoUrlProvider.getMaxPhotoStreamSize();
@@ -91,19 +97,19 @@ export class MainPhotoComponent implements OnInit {
     return arr;
   }
 
-  // addToFavorites() {
-  //   alert('Photo added to Favorites');
-  //   this.setFavFramePhotoUrl();
-  //   this.favPhotoDisplayIndex += 1;
-  // }
+  /* addToFavorites() {
+    alert('Photo added to Favorites');
+    this.setFavFramePhotoUrl();
+    this.favPhotoDisplayIndex += 1;
+  }
 
-  // setFavFramePhotoUrl() {
-  //   this.photoUrlProvider.getPhotoStream()
-  //     .subscribe(
-  //       data => {
-  //         this.favPhotoStreamIndex = this.favPhotoStreamIndexArray[this.favPhotoDisplayIndex];
-  //         this.favFramePhotoUrl = data[this.favPhotoStreamIndex].fullUrl + this.LARGE_URL_SUFFIX;
-  //       }
-  //     );
-  // }
+  setFavFramePhotoUrl() {
+    this.favPhotoUrlProvider.getPhotoStream()
+      .subscribe(
+        data => {
+          this.favPhotoStreamIndex = this.favPhotoStreamIndexArray[this.favPhotoDisplayIndex];
+          this.favFramePhotoUrl = data[this.favPhotoStreamIndex].url + this.LARGE_URL_SUFFIX;
+        } //hard code user and json file and push to server side
+      );
+  } */
 }

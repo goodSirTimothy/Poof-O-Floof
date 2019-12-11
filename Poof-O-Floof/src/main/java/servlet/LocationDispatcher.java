@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +34,7 @@ public class LocationDispatcher implements Dispatcher {
 		try {
 			// get the token
 			pfcu.requestNewToken();
-			
+
 			// get coordinates
 			LocationRequest locReq = (LocationRequest) Json.read(request.getInputStream(), LocationRequest.class);
 			// if location object is not null

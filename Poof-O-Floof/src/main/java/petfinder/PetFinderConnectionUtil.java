@@ -7,9 +7,7 @@ import java.io.PrintStream;
 import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,11 +17,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import util.Json;
 import visitor.pattern.PetfinderUrlVisitor;
-import model.Photo;
 
 /**
  * Request animals from Petfinder.com API.
@@ -212,12 +208,14 @@ public class PetFinderConnectionUtil {
 								+ ",\"photoId\":" + urlArray[1] 
 								+ ",\"type\":" + animal.get("type") 
 								+ ",\"fullUrl\":" + "\"" + urlArray[0] + "=" + urlArray[1] + "\""
+								+ ",\"url\":" + animal.get("url")
 								+ "}");
 						// logger information in JSON format. 
 						logger.trace("\n{" + "\n\t\"id\":" + animal.get("id") 
 								+ ",\n\t\"photoId\":" + urlArray[1]
 								+ ",\"type\":" + animal.get("type") 
 								+ ",\n\t\"fullUrl\":" + "\"" + urlArray[0] + "="
+								+ ",\n\t\"url\":" + animal.get("url")
 									+ urlArray[1] + "\"" + "\n}");
 					}
 				}
