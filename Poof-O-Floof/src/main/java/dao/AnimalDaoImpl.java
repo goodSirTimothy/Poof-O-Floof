@@ -13,17 +13,22 @@ import org.apache.logging.log4j.Logger;
 import model.AnimalBasic;
 import model.AnimalFull;
 import model.Photo;
+import model.ServerFavPhotos;
 import util.ConnectionUtil;
 import util.Exceptions;
 import visitor.pattern.SqlPreparedVisitor;
 
+/**
+ * 
+ * 
+ * @author Tim
+ *
+ */
 public class AnimalDaoImpl implements AnimalDao {
 	private static SqlPreparedVisitor sqlVisitor = SqlPreparedVisitor.getInstance();
-
 	private static final AnimalDao instance = new AnimalDaoImpl();
 
-	private AnimalDaoImpl() {
-	}
+	private AnimalDaoImpl() {}
 
 	public static AnimalDao getInstance() {
 		return instance;
@@ -41,18 +46,20 @@ public class AnimalDaoImpl implements AnimalDao {
 		}
 	}
 
-	private Photo extractPhoto(ResultSet rs) throws SQLException {
-		int photoId = rs.getInt("photo_id");
-		int animalId = rs.getInt("animal_id");
-		String type = rs.getString("animal_type");
+	/**
+	 * Extract the photo received from Database.
+	 * @param rs = {@link ResultSet}
+	 * @return
+	 * @throws SQLException
+	 */
+	private ServerFavPhotos extractPhoto(ResultSet rs) throws SQLException {
 		String fullUrl = rs.getString("full_url");
-		String url = rs.getString("url");
-		return new Photo(animalId, photoId, type, fullUrl, url);
+		return new ServerFavPhotos(fullUrl, fullUrl, fullUrl);
 	}
 
 	@Override
-	public List<Photo> getFavoriteList(int userId) {
-		List<Photo> photoList = new ArrayList<Photo>();
+	public List<ServerFavPhotos> getFavoriteList(int userId) {
+		List<ServerFavPhotos> photoList = new ArrayList<ServerFavPhotos>();
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
 			ResultSet rs = sqlVisitor.selectPhotoByUserId(conn, userId).executeQuery();
@@ -64,6 +71,12 @@ public class AnimalDaoImpl implements AnimalDao {
 			Exceptions.logSQLException(e);
 		}
 		return photoList;
+	}
+	
+
+	public boolean updateTotalLikes(AnimalBasic animalBasic) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	/**********************************************************************************************************
@@ -179,14 +192,6 @@ public class AnimalDaoImpl implements AnimalDao {
 			Exceptions.logSQLException(e);
 			return false;
 		}
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public boolean updateTotalLikes(AnimalBasic animalBasic) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	/**
